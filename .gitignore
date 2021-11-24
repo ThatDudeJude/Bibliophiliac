@@ -1,0 +1,8 @@
+*.pyc
+*.pem
+*.sql
+*.db
+./instance/*
+config.py
+venv
+./tests/*

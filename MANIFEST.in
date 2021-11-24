@@ -1,0 +1,4 @@
+include bibliophiliac/schema.sql 
+graft bibliophiliac/static 
+graft bibliophiliac/templates
+global_exclude *.pyc 
