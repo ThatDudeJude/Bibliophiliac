@@ -1,0 +1,32 @@
+.grid_results {
+  display: grid;
+  row-gap: 20px;
+  background-color: brown;
+  grid-template-columns: fit-content;
+  padding: 20px;
+  height: min-content;
+  width: fit-content;
+  margin: 0px auto 0px auto;
+}
+.grid_results .flex_results {
+  display: flex;
+  background-color: chartreuse;
+  color: black;
+  flex-wrap: wrap;
+  height: fit-content;
+  width: fit-content;
+}
+.grid_results .flex_results p {
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+  margin: 0px auto 0px auto;
+}
+.grid_results .flex_results ul {
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+  margin: 0px auto 0px auto;
+}
+
+/*# sourceMappingURL=search_results.css.map */

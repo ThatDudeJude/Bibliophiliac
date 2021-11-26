@@ -1,20 +1,78 @@
 {% extends 'base.html' %}
 
+{% block stylesheet %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search_results.css') }}">
+{% endblock %}
 
 {% block header %} 
-
-<h6>{% block title %}Register{% endblock %}</h6>
+<br>
+<h1 class="col-10 offset-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">{% block title %}Book Search{% endblock %}</h1>
 {% endblock %}    
-
+<br>
 {% block content %} 
 
-<div class="col10">
-    <h1>Find Books</h1>
-    <form >
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+<div class="col-10 offset-1 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">    
+    
+    <form action="{{ url_for('books.search') }}" method="post">
+        <div class="form-row">
+        <div class="input-group">
+            <input class="form-control" type="text" name='search_term' placeholder="ISBN/Title/Author/Year" value="{{ request.form.get('search_term', None) or ''}}">
+            <span class="input-group-append">
+                <button class="btn btn-secondary" type="submit">Search</button>
+        </span>
+            
+        </div>
+        </div>
+        <br>
+        <div class="form-row" >
+        <div style="margin:0px auto 0px auto;">        
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="search_filter" id="title" value="title"> Title
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="search_filter" id="author" value="author"> Author
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="search_filter" id="year" value="year"> Year
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="search_filter" id="isbn" value="isbn"> ISBN
+            </label>
+        </div>
+    </div>
+    </div>
     </form>
-
+</div>
+    
+<div class="results_view">
+    {% if list_results %}
+    <h3>Search Results For <q>{{ request.form.get("search_term") }}</q></h3>
+    <div class="grid_results"> 
+    {% for result in list_results %}
+    
+        <div class="flex_results">
+            <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""></p> 
+            <ul>
+                <li>Title: {{ result.title }}</li>
+                <li>Author: {{ result.author }}</li>
+                <li>Year: {{ result.year }}</li>           
+                <li>ISBN: {{ result.isbn }}</li>     
+                <!-- <li>Average Rating</li> -->
+                <!-- <li>Num Responses</li> -->
+            </ul>
+        </div>
+    {% endfor %}
+    {% else %}   
+        <p>{{ message }}</p>
+    {% endif %}
+    </div>
 </div>
 
 {% endblock %}

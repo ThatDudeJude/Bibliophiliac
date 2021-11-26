@@ -4,7 +4,7 @@ from flask.globals import g, current_app, session
 # from flask_session import Session
 from flask.cli import with_appcontext
 from sqlalchemy import text
-import click
+import click, csv
 
 
 
@@ -26,6 +26,15 @@ def initialize_database():
     file = open(current_app.config["INIT_DB_FILE"])
     sql = text(file.read())
     engine.execute(sql)
+
+    books = current_app.open_resource('books.csv', 'r')
+    reader = csv.reader(books)
+    next(reader)
+    for isbn, title, author, year in reader:
+        sql = f"INSERT INTO books (isbn, title, author, year) VALUES (%s, %s, %s, %s)"
+        engine.execute(sql, (isbn, title, author, year))
+
+
 
     
 def close_db(e=None):

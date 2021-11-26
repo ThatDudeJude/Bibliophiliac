@@ -2,13 +2,16 @@
 
 {% block header %} 
 
+<br>
+<h1 class='col-12 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 registration'>{% block title %}Register Account{% endblock %}</h1>
 
-<h6>{% block title %}Register{% endblock %}</h6>
 {% endblock %}    
+
+<br>
 
 {% block content %}
 
-<div class='col-6'>
+<div class='col-10 offset-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 registration'>
 <form action="{{ url_for('authenticate.register') }}", method="post">
     <div class="form-group">
       <label for="username">Username</label>
@@ -29,7 +32,8 @@
     {% endif %}
     </div>
     {% endfor %}
-    <button type="submit" class="btn btn-primary">Register</button>      
+    <button type="submit" class="btn btn-primary active">Register</button>      
 </form>
+
   </div>
 {% endblock %}
