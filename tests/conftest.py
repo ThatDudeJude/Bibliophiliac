@@ -17,7 +17,7 @@ def app():
         db.execute(test_sql)
         yield app
     
-    db.execute("DROP TABLE IF EXISTS books;DROP TABLE IF EXISTS reviews;DROP TABLE IF EXISTS users;")
+    db.execute("DROP TABLE IF EXISTS reviews;DROP TABLE IF EXISTS books;DROP TABLE IF EXISTS users;")
     db.commit()
     db.close()
 

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/book_review.css') }}">
+{% endblock %}
+
+{% block header %} 
+<br>
+<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">{% block title %}Reviews{% endblock %} For: <q>{{ result.title }}</q></h1>
+{% endblock %}    
+<br>
+
+{% block content %} 
+
+    
+<div class="book_info col-lg-12 col-md-12 col-sm-12"> 
+    <div class="flex_info">
+            <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="" style="width: 100%;"></p>
+            <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt eveniet autem consectetur quidem magni quis tenetur cumque deleniti iure aut, nam iusto earum? Incidunt, iste fuga! Enim nam similique odio temporibus ipsum culpa provident autem sapiente quos. Sed nesciunt tempora architecto hic, repellat harum nemo explicabo illo porro incidunt accusantium!</p> -->
+            <ul>
+                <li> <b>Title:</b>   {{ result.title }}</li>
+                <li><b>Author:</b> {{ result.author }}</li>
+                <li><b>Year:</b> {{ result.year }}</li>           
+                <li><b>ISBN:</b> {{ result.isbn }}</li>     
+                <!-- <li>Average Rating</li> -->
+                <!-- <li>Num Responses</li> -->
+            </ul>
+
+    </div>
+</div>
+
+
+<div class="fetched_reviews col-lg-10 offset-lg-1 col-md-12 col-sm-12">    
+    {% if book_reviews %}
+    {% for review in book_reviews %}
+    <div class="user_review">
+        <div class="user_info">
+            <a href="{{ url_for('profile.user_profile', name=review.name) }}">{{ review.name }}</a>
+        </div>
+        <div class="review">
+            {{ review.rating }}
+        </div>
+        <div class="review_text">
+            {{ review.opinion }}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %} 
+    <div class="no_review">
+        <p>No Reviews Available Yet</p>
+    </div>
+    {% endif %}    
+</div>
+
+
+{% if not user_review %}
+{% for message in get_flashed_messages() %}
+        {% if message %} 
+        <div class="alert alert-primary" role="alert">
+            <strong>
+                {{ message }}
+            </strong>
+        {% endif %}
+        </div>
+        {% endfor %}
+<div class="add_review">
+    <button id="add_review-btn" onclick="show_review()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Review</button>
+<div class="review_form">
+
+    <form action="{{ url_for('books.reviews', isbn=result.isbn) }}" class="form_review" method="post">
+        <div id="star_container" class="form-row">    
+            <div class="reviews">        
+                <input type="radio" name="rating" id="rate-0" class="review_input review_input-none" value="0" checked>
+                <label class="review_label review_label-zero" for="rate-0">
+                <i class="no-star fa fa-vote-yea"></i>
+                </label>
+                <input type="radio" name="rating" id="rate-1" class="review_input review_input-one" value="1">
+                <label class="review_label review_label-one" for="rate-1">
+                <i class="star fa fa-star"></i>
+                <i class="fas fa-angry" style="font-size: 1.5em;"></i>
+                </label>
+                <input type="radio" name="rating" id="rate-2" class="review_input review_input-two" value="2">
+                <label class="review_label review_label-two" for="rate-2">
+                <i class="star fa fa-star"></i>
+                <i class="fas fa-frown" style="font-size: 1.5em;"></i>
+                </label>    
+                <input type="radio" name="rating" id="rate-3" class="review_input review_input-three" value="3">
+                <label class="review_label review_label-three" for="rate-3">
+                    <i class="star fa fa-star"></i>
+                    <i class="fas fa-meh-rolling-eyes" style="font-size: 1.5em;"></i>
+                </label>
+
+                <input type="radio" name="rating" id="rate-4" class="review_input review_input-four" value="4">
+                <label class="review_label review_label-four" for="rate-4">                
+                    <i class="star fa fa-star"></i>
+                    <i class="fas fa-grin-beam" style="font-size: 1.5em;"></i>    
+                </label>
+                <input type="radio" name="rating" id="rate-5" class="review_input review_input-five" value="5">
+                <label class="review_label review_label-five" for="rate-5">                
+                    <i class="star fa fa-star"></i>
+                    <i class="fas fa-grin-hearts" style="font-size: 1.5em;"></i>
+                </label>                        
+            </div>
+        </div>
+        <div>
+            <textarea class="review_text" name="review_input" id="" rows="5"></textarea>
+        </div>        
+            <div>
+                <button type="submit"> Submit Review </button>
+            </div>
+    </form>
+    </div>
+</div>    
+
+{% endif %}
+
+{% endblock %}
+
+
+{% block script %}
+<script>        
+    let review = document.querySelector('.add_review');        
+    
+    let btnContent = document.getElementById('add_review-btn')
+    function show_review() {        
+        review.classList.toggle('show_review')        
+        let content = btnContent.innerHTML            
+        if (content.includes("fa-plus")) {
+            content = content.replace('fa-plus','fa-minus')
+        }
+        else if (content.includes("fa-minus")) {
+            content = content.replace('fa-minus',"fa-plus")
+        }
+        btnContent.innerHTML = content
+        document.scrollingElement.scrollTo(0, 500)
+    }
+</script>
+
+{% endblock %}

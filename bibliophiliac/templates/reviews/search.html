@@ -6,17 +6,17 @@
 
 {% block header %} 
 <br>
-<h1 class="col-10 offset-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">{% block title %}Book Search{% endblock %}</h1>
+<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">{% block title %}Book Search{% endblock %}</h1>
 {% endblock %}    
 <br>
 {% block content %} 
 
-<div class="col-10 offset-1 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1">    
+<div class="col-12 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12">    
     
-    <form action="{{ url_for('books.search') }}" method="post">
+    <form action="{{ url_for('books.search') }}" method="get">
         <div class="form-row">
         <div class="input-group">
-            <input class="form-control" type="text" name='search_term' placeholder="ISBN/Title/Author/Year" value="{{ request.form.get('search_term', None) or ''}}">
+            <input class="form-control" type="text" name='search_term' placeholder="ISBN/Title/Author/Year" value="{{ request.args.get('search_term', None) or ''}}">
             <span class="input-group-append">
                 <button class="btn btn-secondary" type="submit">Search</button>
         </span>
@@ -50,29 +50,32 @@
     </div>
     </form>
 </div>
-    
+
+{% if search %}
 <div class="results_view">
+    
     {% if list_results %}
-    <h3>Search Results For <q>{{ request.form.get("search_term") }}</q></h3>
+    <h3 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">Search Results For <q>{{ request.args.get("search_filter", '') }}&colon; {{ request.args.get("search_term") }}</q></h3>
     <div class="grid_results"> 
     {% for result in list_results %}
     
-        <div class="flex_results">
-            <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""></p> 
+        <a class="flex_results" href="{{ url_for('books.reviews', isbn=result.isbn) }}">
+            <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""></p>
             <ul>
-                <li>Title: {{ result.title }}</li>
-                <li>Author: {{ result.author }}</li>
-                <li>Year: {{ result.year }}</li>           
-                <li>ISBN: {{ result.isbn }}</li>     
+                <li> <b>Title:</b>   {{ result.title }}</li>
+                <li><b>Author:</b> {{ result.author }}</li>
+                <li><b>Year:</b> {{ result.year }}</li>           
+                <li><b>ISBN:</b> {{ result.isbn }}</li>     
                 <!-- <li>Average Rating</li> -->
                 <!-- <li>Num Responses</li> -->
             </ul>
-        </div>
+        </a>
     {% endfor %}
+
     {% else %}   
-        <p>{{ message }}</p>
+    <h4 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">{{ message }}</h4>        
     {% endif %}
     </div>
 </div>
-
+{% endif %}
 {% endblock %}

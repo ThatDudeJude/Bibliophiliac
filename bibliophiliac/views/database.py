@@ -27,7 +27,7 @@ def initialize_database():
     sql = text(file.read())
     engine.execute(sql)
 
-    books = current_app.open_resource('books.csv', 'r')
+    books = current_app.open_resource(current_app.config['BOOKS_CSV'], 'r')
     reader = csv.reader(books)
     next(reader)
     for isbn, title, author, year in reader:

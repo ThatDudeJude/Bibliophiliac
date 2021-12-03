@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
 {% block header %} 
-
-<br>
-<h1 class='col-12 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 registration'>{% block title %}Register Account{% endblock %}</h1>
+<div class='col-12o col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 registration' style="background-color: snow; padding: 5px 20px 30px 20px; border-radius: 8px; height: max-content;">
+<h2 class='registration' style="color: saddlebrown; padding: 10px; text-align: center; margin: 10px auto; width: 100%;">{% block title %}Create Account{% endblock %}</h2>
 
 {% endblock %}    
 
@@ -11,7 +10,7 @@
 
 {% block content %}
 
-<div class='col-10 offset-1 col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 registration'>
+<div>
 <form action="{{ url_for('authenticate.register') }}", method="post">
     <div class="form-group">
       <label for="username">Username</label>
@@ -36,4 +35,7 @@
 </form>
 
   </div>
+  
 {% endblock %}
+
+</div>

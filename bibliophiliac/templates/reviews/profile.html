@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+
+{% block title %} Profile {% endblock %}
+{% block header %} 
+<br>
+{% if g.id %}
+<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">Your Profile</h1>
+{% else %} 
+<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">Someone's Profile</h1>
+{% endif %}
+{% endblock %}    
+<br>
+{% block content %} 
+
+<div class="col-12 col-lg-10 offset-lg-1 col-md-8 offset-md-2 col-sm-12">    
+    
+    <div class="user_profile">
+    {% if can_edit %}
+
+        <div class="form_input">
+            <form action="{{ url_for('profile.update_profile', id=g.id) }}" method="post" enctype="multipart/form-data">
+
+            <div id="avatar">
+                <img src="{{ url_for('static', filename=img) }}" id="avatar_img">                
+            </div>
+            <input type="file" name="avatar_photo" id="add_img" accept='.jpg, .jpeg, .png, .gif' required='' capture placeholder="Photo">
+            <div class="btn_container">
+                <button id="avatar_btn" class="hidden">change avatar</button>
+            </div>            
+            <div class="username">
+                <p  id="user_name">Username: {{ username }}</p>
+                <label class="hidden" id="name_label" for="change_name">Username: </label>
+                <input class="hidden" type="text" name='new_name' id="change_name" value="{{ username }}">        
+            </div>
+            <div class="change_and_save">                
+                <button id="submit_btn" class="hidden" type="submit">Save</button>
+            </div>
+            <a id="profile_btn" class="btn btn-primary" href="#" role="button">Change Profile</a>
+            
+            </form>
+        </div>
+    {% else %}
+    <div class="profile">        
+        <div id="avatar">
+            <img src="{{ url_for('static', filename='imgs/Background6.png') }}" id="avatar_img">                
+        </div>
+        
+        <div class="username">
+            <p  id="user_name">Username: {{ username }}</p>
+        </div>
+        
+    </div>
+    
+    {% endif %}
+        {{ img }}
+        {% for message in get_flashed_messages() %}
+        {{ message }}
+        {% endfor %}
+        <div class="reviews_profile">            
+            <p>Number of Reviews: {{ total_reviews }}</p>
+            <p>Average Rating for all reviews: {{ avg_rating }}</p>
+            <div class="books_reviewed">                
+                <button id="reviewed_books">Books Reviewed:</button>
+                <div class="all_books" id="books">                    
+                    <p>This</p>
+                    <p>That</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %} 
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}

@@ -7,5 +7,5 @@ def test_app_env(app):
 
 def test_app_index(client):
     response = client.get('/')
-    assert response.status == '200 OK'
-    assert b'Hello' in response.data
+    assert response.status == '302 FOUND'
+    assert b'search' in response.data

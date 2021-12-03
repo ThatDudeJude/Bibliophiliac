@@ -33,9 +33,13 @@ def create_app(testing=False, production=False):
     app.register_blueprint(authentication.bp)
     app.add_url_rule('/', endpoint='index')
 
-    from .views import search
-    app.register_blueprint(search.bp)
+    from .views import search_and_reviews
+    app.register_blueprint(search_and_reviews.bp)
     app.add_url_rule('/', endpoint='index')    
+
+    from .views import profiles
+    app.register_blueprint(profiles.bp)
+    app.add_url_rule('/', endpoint='index')
 
     @app.route('/')
     def index():

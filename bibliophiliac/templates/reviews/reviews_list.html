@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search_results.css') }}">
+{% endblock %}
+
+
+{% block title %} Reviews List {% endblock %}
+{% block header %} 
+<br>
+{% if g.id %}
+<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">Your Reviews</h1>
+{% else %} 
+<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">All Reviews</h1>
+{% endif %}
+{% endblock %}    
+<br>
+{% block content %} 
+
+<div class="col-12 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12">    
+    
+<div class="results_view">
+    
+    {% if list_reviews %}
+    <h3 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">Total Books Reviewed: {{ total }}</q></h3>
+    <div class="grid_results"> 
+    {% for review in list_reviews %}
+    
+        <a class="flex_results" href="{{ url_for('books.reviews', isbn=review.book_isbn) }}">
+            <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""></p>
+            <ul>
+                <li> <b>Title:</b>   {{ review.title }}</li>
+                <li><b>Author:</b> {{ review.author }}</li>
+                <li><b>Year:</b> {{ review.year }}</li>           
+                <li><b>ISBN:</b> {{ review.isbn }}</li>     
+                <!-- <li>Average Rating</li> -->
+                <!-- <li>Num Responses</li> -->
+            </ul>
+        </a>
+    {% endfor %}
+
+    {% else %}   
+    <h4 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">{{ message }}</h4>        
+    {% endif %}
+    </div>
+</div>
+
+{% endblock %}
