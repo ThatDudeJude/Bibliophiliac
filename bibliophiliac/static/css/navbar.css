@@ -1,0 +1,282 @@
+/* navigation */
+
+
+header.navbar {
+    grid-column: 1 / span 1;
+    height: 75px;            
+    width: 100vw;
+    z-index: 100;                         
+    box-shadow: var(--box-shadow);
+}
+
+.side-nav {
+    position: absolute;            
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 0.5fr 1fr 1fr;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;                        
+    z-index: -1;
+    box-shadow: var(--box-shadow);            
+    transition: left ease-in-out 500ms;
+}
+.side-nav-links {                        
+    grid-row: 3 / span 1;                        
+    justify-content: center; 
+    text-align: left;
+    
+}
+.side-nav-links .nav-links li{                                    
+    width: fit-content;
+    margin-left:50px;
+}
+.nav-search {            
+    grid-row: 2 / span 1;                        
+    text-align: center;    
+    bottom: 0;            
+}        
+
+.nav-search input {
+    width: 90%;
+}
+
+.nav-search button {
+    margin: 0 auto;
+    margin-top: 5px;
+}
+
+
+  
+button.reviews-btn, button.profiles-btn, .username-account {
+    outline: none;
+    border: none;
+    padding: 0;
+    background-color: var(--link-color);
+    text-align: left;            
+}
+
+div.account {
+    position: relative;
+    display: grid;
+    grid-template-columns: 100px  max-content;            
+    width: max-content;  
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+}
+
+button.reviews-btn:hover, button.profiles-btn:hover, button.username-account:hover {
+    background-color: unset;
+}
+
+.account > * {
+    background-color: var(--main-color);
+    padding: 10px;
+}
+
+.account .account-menu {
+    background-color: var(--main-color);
+}
+
+/* .account .account-menu a:nth-child(2) {
+    display: none;
+} */
+
+.account a, .side-nav .nav-links li a, button.username-account a {
+    display: block;            
+    width: max-content;
+}
+
+.account a:hover, .side-nav .nav-links li a:hover, button.username-account a:hover {
+    transform: scale(0.95);
+}
+
+.account-menu {
+    position: absolute;
+    top: 70px;
+    width: 100%;
+    text-align: center;
+    /* display: ; */
+}
+
+.account-menu a {
+    width: 100%;
+}
+
+.small-avatar {
+    /* display: inline-block; */
+    /* grid-column: 1 / span 1; */
+    display: flex;    
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+    height: 75px;
+    clip-path: circle(25px at 50% 50%);
+    border: 1px black solid;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.small-avatar img {            
+    margin: 0;
+    display: inline-block;
+    
+    height: 100%; 
+    border-radius: 50%;
+}
+
+/* .side-nav .nav-links li a {
+    padding: 10px;
+} */
+
+.side-nav .nav-links li a:hover {
+    transform: scale(0.95);
+    background-color: var(--main-color);    
+    margin: 0;
+    padding: 10px;
+    border-radius: 5px;    
+}
+
+.reviews-menu, .profiles-menu, .account-menu {
+    display: none;
+    padding-left: 12px;
+}
+
+.account-menu {
+    box-shadow: var(--box-shadow);
+}
+
+.show-menu {
+    display: block;
+}
+
+header.navbar .flex .show-side-nav {            
+    left: 0px;
+}
+
+
+
+.toggle-side-nav .nav-toggle {        
+    transition: transform ease-in 500ms;
+    cursor: pointer;    
+}
+
+.rotate-toggle {
+    transform: scale(1.5);
+    transform: rotateZ(180deg);                        
+}
+div.site-container {    
+    min-height: calc(100vh - 100px)
+}
+
+
+footer.site-footer {    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;    
+    height: max-content;
+    left: 0px;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #880E4F;
+    color: #fff;
+    box-shadow: -3px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
+footer.site-footer div {    
+    width: max-content;
+    margin: 10px 10px;
+}
+
+
+@media (max-width: 768px) {
+    header.navbar {
+        height: max-content;
+    }
+    header.navbar nav.nav {
+        display: grid;                 
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        text-align: center;        
+        height: max-content;
+        background-color: var(--main-color);                
+        
+    }
+
+    header.navbar nav.nav .toggle-side-nav {                
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 2;
+        text-align: left;
+    }
+    header.navbar nav.nav .logo {
+        font-size: 1.5em;                
+        width: fit-content;
+        margin: 0px auto;
+        grid-column: 1 / span 3;                
+        grid-row: 1 / span 1;
+        text-align: left;
+    }
+    header.navbar nav.nav .account {
+        grid-column: 1 / span 3;
+        grid-row: 2 / span 1;
+        width: max-content;
+        margin:0px auto;
+        padding: 0;
+        /* background-color: transparent;                      */
+        display: block;
+        position: relative;
+    }
+    .small-avatar, .username-account {
+        display: none;
+    }
+    .account .account-menu {
+        position: relative;                
+        display: inline-block;
+        top: 0;
+        width: 100%;
+        background-color: unset;             
+        box-shadow: none;
+    } 
+    
+    .account .account-menu a {
+        display: inline-block;
+        position: relative;
+        width: max-content;
+        /* background-color: var(--link-color); */
+        background-color: var(--main-color);
+        padding: 10px;
+    }            
+
+    .account .account-menu a:nth-child(2) {
+        display: inline-block;
+    }
+    .account-menu a:last-child {
+        display: none;
+    }
+
+    .account-menu a:hover {
+        /* background-color: var(--main-color); */
+        background-color: var(--link-color);        
+    }
+
+    .account-menu a.active {
+        background-color: var(--main-color);
+    }
+
+    /* header.navbar .side-nav .side-nav-links li a {
+        text-align: left;
+    } */
+    
+}
+
+
+
+@media (max-width: 400px) {
+    .account .account-menu a{
+        font-size: 1.02rem;
+        letter-spacing: 0.04rem;
+    }
+}

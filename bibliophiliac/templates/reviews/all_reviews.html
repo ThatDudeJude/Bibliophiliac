@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/all_reviews.css') }}">
+{% endblock %}
+
+
+{% block title %} All Reviews{% endblock %}
+{% block content %} 
+
+<section class="container">
+    {% if reviews_list %}
+    <div class="results-grid">
+        
+        <div class="reviewed-books-stats card">                        
+            <table class="card">
+                <tbody>
+                    <tr><th>Reviewed Books</th><td>:</td><td>{{ total }}</td></tr>                    
+                </tbody>
+            </table>
+        </div>
+        {{ type }}
+        {% for review in reviews_list %}                
+        <div class="results card">            
+            <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="img px-1">
+               <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="">
+            </a>
+            <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="info px-1">
+                <table>
+                    <tr><th>Title</th><td>: </td><td>{{ review.title }}</td></tr>
+                    <tr><th>Author(s)</th><td>: </td><td>{{ review.author }}</td></tr>
+                    <tr><th>ISBN</th><td>: </td><td>{{ review.isbn }}</td></tr>
+                    <tr><th>Year</th><td>: </td><td>{{ review.year }}</td></tr>
+                </table>
+                
+            </a>
+            <div class="review-stats p-1">
+                <button class="btn-secondary stats-btn">Review Stats <i class="fas fa-caret-down    "></i></button>
+                <div class="description">
+                    <table class="stats card">
+                        <tbody>
+                            <tr><th>Number of Reviews</th><td>:</td><td>{{ review.total_reviews }}</td></tr>
+                            <tr><th>Total Ratings Average</th><td>:</td><td>{{ review.total_ratings }}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>    
+        {% endfor %}    
+    </div>
+    {% else %} 
+
+    <div class="card" role="alert">
+        <strong>
+            {{ message }}
+        </strong>    
+    </div>
+    {% endif %}
+    </section>
+{% endblock %}
+
+{% block script %} 
+<script>
+    let bookDescriptionToggleButtons = document.getElementsByClassName('stats-btn');
+    
+    let descriptionText = document.getElementsByClassName('description');
+
+    let numberOfDescriptions = bookDescriptionToggleButtons.length;
+
+    for (let i = 0; i < numberOfDescriptions; i++) {
+        bookDescriptionToggleButtons[i].addEventListener('click', () => {
+        descriptionText[i].classList.toggle('show-stats');
+        let textContent = bookDescriptionToggleButtons[i].innerHTML;
+        if (textContent.includes("fa-caret-down")) {
+            textContent = textContent.replace('down','up');
+        }
+        else if (textContent.includes("fa-caret-up")) {
+            textContent = textContent.replace('up',"down");
+        }
+        bookDescriptionToggleButtons[i].innerHTML = textContent;
+        });
+    }
+</script>
+
+{% endblock %}

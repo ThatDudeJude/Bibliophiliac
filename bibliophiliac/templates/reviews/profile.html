@@ -6,76 +6,118 @@
 
 
 {% block title %} Profile {% endblock %}
-{% block header %} 
-<br>
-{% if g.id %}
-<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">Your Profile</h1>
-{% else %} 
-<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">Someone's Profile</h1>
-{% endif %}
-{% endblock %}    
-<br>
+
 {% block content %} 
 
-<div class="col-12 col-lg-10 offset-lg-1 col-md-8 offset-md-2 col-sm-12">    
-    
-    <div class="user_profile">
-    {% if can_edit %}
-
-        <div class="form_input">
-            <form action="{{ url_for('profile.update_profile', id=g.id) }}" method="post" enctype="multipart/form-data">
-
-            <div id="avatar">
-                <img src="{{ url_for('static', filename=img) }}" id="avatar_img">                
+<section class='container'>
+    {% if can_edit %}    
+    <h1 class="review-header card fs-2">Your Profile</h1>    
+    {% else %}
+    <h1 class="review-header card fs-2">{{ username }}'s Profile</h1>
+    {% endif %}    
+    <div class="user-profile card">            
+        {% if can_edit %}    
+        <div class="form-input card">
+            {% for message in get_flashed_messages() %}
+            {% if message %} 
+            <div class="card alert" role="alert">
+            <strong>
+                {{ message }}
+            </strong>
             </div>
-            <input type="file" name="avatar_photo" id="add_img" accept='.jpg, .jpeg, .png, .gif' required='' capture placeholder="Photo">
-            <div class="btn_container">
-                <button id="avatar_btn" class="hidden">change avatar</button>
+            {% endif %}            
+            {% endfor %}
+            <form action="{{ url_for('profile.update_profile', id=g.id) }}" method="post" enctype="multipart/form-data">
+                            
+            <div id="avatar">
+                <img src="{{ url_for('static', filename=g.profile_url) }}" id="avatar-img">                
+            </div>
+            <input class="hidden" type="file" name="avatar_photo" id="add-img" placeholder="Photo", required='' capture>
+            <div class="btn-container">
+                <button id="avatar-btn" class="hidden btn-primary">Change Avatar</button>
             </div>            
             <div class="username">
-                <p  id="user_name">Username: {{ username }}</p>
-                <label class="hidden" id="name_label" for="change_name">Username: </label>
-                <input class="hidden" type="text" name='new_name' id="change_name" value="{{ username }}">        
+                <p  class="profile-name">Username: {{ g.username }}</p>
+                <label class="name-label hidden " for="change-name">Username: </label>
+                <input class="change-name hidden" type="text" name='new_name' value="{{ g.username }}">        
             </div>
-            <div class="change_and_save">                
-                <button id="submit_btn" class="hidden" type="submit">Save</button>
+
+            <div class="change-and-save">
+                <button id="profile-btn" class="btn-primary">Change Profile</button>
+                <button id="submit-btn" class="hidden btn-primary" type="submit">Save</button>
             </div>
-            <a id="profile_btn" class="btn btn-primary" href="#" role="button">Change Profile</a>
-            
             </form>
         </div>
-    {% else %}
-    <div class="profile">        
-        <div id="avatar">
-            <img src="{{ url_for('static', filename='imgs/Background6.png') }}" id="avatar_img">                
-        </div>
-        
-        <div class="username">
-            <p  id="user_name">Username: {{ username }}</p>
-        </div>
-        
-    </div>
-    
-    {% endif %}
-        {{ img }}
-        {% for message in get_flashed_messages() %}
-        {{ message }}
-        {% endfor %}
-        <div class="reviews_profile">            
-            <p>Number of Reviews: {{ total_reviews }}</p>
-            <p>Average Rating for all reviews: {{ avg_rating }}</p>
-            <div class="books_reviewed">                
-                <button id="reviewed_books">Books Reviewed:</button>
-                <div class="all_books" id="books">                    
-                    <p>This</p>
-                    <p>That</p>
-                </div>
-
+        {% else %}
+        <div id="profile">
+            <div id="avatar-not-logged">
+                <img src="{{ url_for('static', filename='imgs/avatars/'+username) }}" id="avatar-img-not-logged">                
+            </div>
+            <div class="username">
+                <p  class="profile-name">Username: {{ username }}</p>
             </div>
         </div>
-    </div>
+        {% endif %}
+        <table class="reviews-profile card">            
+            <tbody>
+                <tr><th>Number of Reviews</th><td>:</td><td>{{ total_reviews }}</td></tr>
+                <tr><th>Total Ratings Average</th><td>:</td><td>{{ average_rating_score }}</td></tr>            
+            </tbody>
+        </table>
+        <div class="books-reviewed">
+            <button id="reviewed-books-button" class="btn-primary">Books Reviewed <i class="fa fa-caret-down" aria-hidden="true"></i></button>            
+            <div class="all-books" id="show-books">  
+                {% if user_reviews %}             
+                {% for review in user_reviews %}     
+                <div class="user-reviewed-books card">                                
+                    <div class="img px-1">
+                        <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="">
+                    </div>
+                    <div class="info px-1">
+                        <table>
+                            <tr><th>Title</th><td>: </td><td>{{ review.title }}</td></tr>
+                            <tr><th>Author(s)</th><td>: </td><td>{{ review.author }}</td></tr>                                
+                            <tr><th>Year</th><td>: </td><td>{{ review.year }}</td></tr>
+                        </table>                        
+                    </div>  
+                    <div class="user-review">
+                        <p class="fs-1">Rating: {{ review.rating }} <img src="{{ url_for('static', filename='imgs/ratings/rating_{}.png'.format(review.rating)) }}" alt=""></p>                            
+                    </div>                      
+                </div>                    
+                {% endfor %}
+                {% else %}
+                
+                    <div class="alert-card card" role="alert">                            
+                        <p class="fs-0">No reviewed books yet.</p>
+                    </div>
+                
+                {% endif %}
+            </div>            
+        </div>            
+</section>
+
 {% endblock %}
 
 {% block script %} 
-<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+<script>
+    
+    let reviewedBooksToggleButton = document.querySelector('#reviewed-books-button')
+    let showBooks = document.querySelector('#show-books')
+    reviewedBooksToggleButton.addEventListener('click', () => {
+        showBooks.classList.toggle('show-books')
+        let textContent = reviewedBooksToggleButton.innerHTML            
+            if (textContent.includes("fa-caret-down")) {
+                textContent = textContent.replace('down','up')
+            }
+            else if (textContent.includes("fa-caret-up")) {
+                textContent = textContent.replace('up',"down")
+            }
+            reviewedBooksToggleButton.innerHTML = textContent
+    })
+
+</script>
+{% if can_edit %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"> </script>    
+{% endif %}
 {% endblock %}
+

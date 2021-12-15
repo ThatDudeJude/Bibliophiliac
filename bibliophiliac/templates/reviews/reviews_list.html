@@ -21,12 +21,12 @@
     
 <div class="results_view">
     
-    {% if list_reviews %}
+    {% if reviews_list %}
     <h3 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">Total Books Reviewed: {{ total }}</q></h3>
     <div class="grid_results"> 
-    {% for review in list_reviews %}
+    {% for review in reviews_list %}
     
-        <a class="flex_results" href="{{ url_for('books.reviews', isbn=review.book_isbn) }}">
+        <a class="flex_results" href="{{ url_for('books.find_review', isbn=review.book_isbn) }}">
             <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""></p>
             <ul>
                 <li> <b>Title:</b>   {{ review.title }}</li>

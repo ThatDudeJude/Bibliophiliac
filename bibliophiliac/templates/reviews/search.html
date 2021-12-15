@@ -1,81 +1,105 @@
 {% extends 'base.html' %}
 
 {% block stylesheet %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/search_results.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
 {% endblock %}
 
-{% block header %} 
-<br>
-<h1 style="padding: 10px; text-align: center; margin: 0px auto 10px auto; width: 100%;">{% block title %}Book Search{% endblock %}</h1>
-{% endblock %}    
-<br>
+{% block title %}Book Search{% endblock %}
+
 {% block content %} 
 
-<div class="col-12 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12">    
-    
-    <form action="{{ url_for('books.search') }}" method="get">
-        <div class="form-row">
-        <div class="input-group">
-            <input class="form-control" type="text" name='search_term' placeholder="ISBN/Title/Author/Year" value="{{ request.args.get('search_term', None) or ''}}">
-            <span class="input-group-append">
-                <button class="btn btn-secondary" type="submit">Search</button>
-        </span>
-            
-        </div>
-        </div>
-        <br>
-        <div class="form-row" >
-        <div style="margin:0px auto 0px auto;">        
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="search_filter" id="title" value="title"> Title
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="search_filter" id="author" value="author"> Author
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="search_filter" id="year" value="year"> Year
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="search_filter" id="isbn" value="isbn"> ISBN
-            </label>
+
+
+<section class="container background fs-1">
+    <div class="search-container fs-small">
+        <h1 class="h-1">Book Search</h1>
+        <div class="search">
+            <form action="{{ url_for('books.search_for_book') }}" method="get">
+                <input type="text" name='search_term' placeholder="ISBN/Title/Author/Year" value="{{ request.args.get('search_term', None) or ''}}">
+                <div class="search-filter">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="search_filter" id="title" value="title"> Title
+                    </label>
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="search_filter" id="author" value="author"> Author
+                    </label>                
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="search_filter" id="year" value="year"> Year
+                    </label>
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="search_filter" id="isbn" value="isbn"> ISBN
+                    </label>
+                </div>
+                <button type="submit" class='btn-primary fs-0'>Search</button>
+            </form>
         </div>
     </div>
+</section>
+<section class="container">
+    {% if is_successful %}
+    <div class="results-grid">
+        {% if results_list %}
+        <div class="books-results-stats card">                        
+            <div class="stats card">                
+                Search Results For {{ request.args.get("search_filter", '') }}: <q><i>{{ request.args.get("search_term") }}</i></q>                                   
+            </div>
+        </div>
+
+        {% for result, book in results_list %}        
+        <!-- <a class="flex_results" href="{{ url_for('books.find_review', isbn=result.isbn) }}"></a> -->
+        <div class="results card" href="{{ url_for('books.find_review', isbn=result.isbn) }}">            
+            <a class="img px-1">
+                <img src="{{ book.image }}" alt="">
+                <!-- <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""> -->
+            </a>
+            <a class="info px-1">
+                <table>
+                    <tr><th>Title</th><td>: </td><td>{{ result.title }}</td></tr>
+                    <tr><th>Author(s)</th><td>: </td><td>{{ result.author }}</td></tr>
+                    <tr><th>ISBN</th><td>: </td><td>{{ result.isbn }}</td></tr>
+                    <tr><th>Year</th><td>: </td><td>{{ result.year }}</td></tr>
+                </table>
+                
+            </a>
+            <div class="description-sect p-1">
+                <button class="btn-secondary description-btn">Description <i class="fas fa-caret-down    "></i></button>
+                <div class="description">
+                    <!-- <p class="p-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum odit dolore facilis vel beatae itaque voluptas delectus mollitia impedit asperiores?</p> -->
+                    <p class="p-1">{{ book.description }}</p>
+                </div>
+                
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}   
+        <div class="reviewed-books-stats card">                        
+            <table class="card">
+                <tbody>
+                    <tr><th>Search Results For <q>{{ request.args.get("search_filter", '') }}</q></th><td>:</td><td>{{ message }}</td></tr>                    
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
     </div>
-    </form>
-</div>
-
-{% if search %}
-<div class="results_view">
-    
-    {% if list_results %}
-    <h3 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">Search Results For <q>{{ request.args.get("search_filter", '') }}&colon; {{ request.args.get("search_term") }}</q></h3>
-    <div class="grid_results"> 
-    {% for result in list_results %}
-    
-        <a class="flex_results" href="{{ url_for('books.reviews', isbn=result.isbn) }}">
-            <p><img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""></p>
-            <ul>
-                <li> <b>Title:</b>   {{ result.title }}</li>
-                <li><b>Author:</b> {{ result.author }}</li>
-                <li><b>Year:</b> {{ result.year }}</li>           
-                <li><b>ISBN:</b> {{ result.isbn }}</li>     
-                <!-- <li>Average Rating</li> -->
-                <!-- <li>Num Responses</li> -->
-            </ul>
-        </a>
-    {% endfor %}
-
-    {% else %}   
-    <h4 style="padding: 10px; text-align: center; margin: 10px auto; width: 100%;">{{ message }}</h4>        
     {% endif %}
-    </div>
-</div>
-{% endif %}
+</section>
 {% endblock %}
+
+{% if results_list %}
+{% block script %}
+<script>
+    let bookDescriptionToggleButtons = document.getElementsByClassName('description-btn');
+    
+    let descriptionText = document.getElementsByClassName('description');
+
+    let numberOfDescriptions = bookDescriptionToggleButtons.length;
+
+    for (let i = 0; i < numberOfDescriptions; i++) {
+        bookDescriptionToggleButtons[i].addEventListener('click', () => {
+            descriptionText[i].classList.toggle('show-description');
+        });
+    }
+</script>
+{% endblock %}
+{% endif %}
+

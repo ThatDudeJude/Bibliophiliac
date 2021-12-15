@@ -2,12 +2,13 @@ from flask import Flask
 # from flask_session import Session
 import os
 
-from flask import render_template, redirect, url_for
+from flask import redirect, url_for
 
 
 
 def create_app(testing=False, production=False):
-    """"The application factory that creates the app instance"""
+    """"The application factory"""
+
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile("config.py")
     if testing:
@@ -43,7 +44,7 @@ def create_app(testing=False, production=False):
 
     @app.route('/')
     def index():
-        return redirect(url_for('books.search'))
+        return redirect(url_for('books.search_for_book'))
 
 
     return app

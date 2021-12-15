@@ -4,64 +4,158 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-5.15.4-web/css/all.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-5.15.4-web/css/fontawesome.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-5.15.4-web/css/brands.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-5.15.4-web/css/solid.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav_bar.css') }}">
+    <link rel="stylesheet" href="../static/fontawesome-free-5.15.4-web/css/all.css">       
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/utilities.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     {% block stylesheet %} {% endblock %}
     <title>{% block title %} {% endblock %}-Bibliophilia</title>
 </head>
 <body>
-
-    <nav class="navbar">
-        <p>Bibliophiliac</p>
-        <div class="burger">
-         <div class="bar"></div>
-         </div>
-        <div class="links">
-            <a href="{{ url_for('books.search') }}">Search</a>               
-            
-            {% if g.id %}
-            <div class="dropdown">
-                <button class='drop-btn'> Reviews <i class="show_caret fa fa-caret-down" aria-hidden="true"></i></button>                    
-                <div class="dropdown-content">
-                    <a href="{{ url_for('books.user_reviews', id=g.id) }}">My Reviews</a>
-                    <a href="{{ url_for('books.all_reviews') }}">All Reviews</a>
-                </div>                    
-                </div>
-            <div class="dropdown">
-                 <button class='drop-btn'> {{ g.username }} <i class="show_caret fa fa-caret-down" aria-hidden="true"></i></button>                    
-                 <div class="dropdown-content">
-                     <a href="{{ url_for('profile.user_profile', name=g.username) }}">Profile</a>
-                     <a href="{{ url_for('authenticate.logout') }}">Logout</a>
-                 </div>                    
-            </div>
-            {% else %}
-            
-            <a href="{{ url_for('books.all_reviews') }}">Reviews</a>
-            
-            <div class="dropdown">
-                <button class='drop-btn'> Account <i class="show_caret fa fa-caret-down" aria-hidden="true"></i></button>                    
-                <div class="dropdown-content">
-                    <a href="{{ url_for('authenticate.login') }}"  id="active_link">Login</a>
-                    <a href="{{ url_for('authenticate.register') }}">Register</a>
-                </div>                    
-           </div>
-           {% endif %}         
-        </div>
-         
-    </nav>         
     
-    <div class="container" style="margin-top: 8vh; margin-bottom: 5vh;">
-        {% block header %} {% endblock %}    
-        {% block content %} {% endblock %}    
+    
+    <div class="site-container">
+        <header class="navbar  my-0 py-0 primary-bg">
+            <nav class="flex my-0 py-0 fs-2 nav">
+                <div class="toggle-side-nav mx-1">
+                    <i class="nav-toggle fa fa-caret-right fa-2x" aria-hidden="true"></i>                
+                </div>
+                <div class="logo">
+                    <p>Bibliophilia</p>
+                </div>    
+                <div class="account fs-0">                                
+                {% if g.id %}
+                    <span class="small-avatar"><img src="{{ url_for('static', filename='imgs/avatars/'+g.username) }}" alt=""></span> <button class="username-account primary-bg btn-primary fs-0">{{ g.username }} <i class="fa fa-caret-down" aria-hidden="true"></i> </button>
+                        <div class="account-menu">                         
+                            <a class="secondary-bg py-1 fs-0" href="{{ url_for('books.fetch_user_reviews', id=g.id) }}">My Reviews</a>
+                            <a class="secondary-bg py-1 fs-0" href="{{ url_for('books.fetch_all_reviews') }}">All Reviews</a>
+                            <a class="secondary-bg py-1 fs-0" href="{{ url_for('authenticate.logout_user') }}">Logout</a>
+                    </div>
+                </div>
+                <div class="side-nav secondary-bg">
+                    <form action="{{ url_for('books.search_for_book') }}" method="get" class="nav-search">
+                        <input class="fs-0" type="text" name='search_term'>
+                        <button class="btn-primary fs-0" type="submit">Book Search</button>
+                    </form>
+                    <nav class="side-nav-links">
+                        <ul class="nav-links fs-1 m-0"> 
+                            <li class='py-1'><button class="reviews-btn btn-primary fs-1">Reviews <i class="fa fa-caret-down" aria-hidden="true"></i> </button>
+                                <div class="reviews-menu secondary-bg fs-0">
+                                    <a class="secondary-bg py-1" href="{{ url_for('books.fetch_user_reviews', id=g.id) }}">My Reviews</a>
+                                    <a class="secondary-bg py-1" href="{{ url_for('books.fetch_all_reviews') }}">All Reviews</a>
+                                </div>
+                            </li>                       
+                            <!-- <li class="py-1">My Reviews</li>
+                            <li class="py-1">All Reviews</li> -->
+                            
+                            <li class='py-1'><a class="secondary-bg  py-1" href="{{ url_for('profile.show_user_profile', name=g.username) }}">My Profile</a></li>                                               
+                            <li class="py-1"><a class="secondary-bg py-1" href="{{ url_for('authenticate.logout_user') }}">Sign Out</a></li>
+                        </ul>
+                    </nav>
+                </div>            
+            </nav>        
+        </header>
+    
+        
+                
+                {% else %}
+                <span class="small-avatar"><img src="{{ url_for('static', filename='imgs/default_avatar.png') }}" alt=""></span><button class="username-account primary-bg btn-primary fs-1">Username<i class="fa fa-caret-down" aria-hidden="true"></i> </button>
+                        <div class="account-menu"> 
+                            <a class="secondary-bg py-1" href="{{ url_for('authenticate.login_user') }}">Log In</a>
+                            <a class="secondary-bg py-1" href="{{ url_for('authenticate.register_user') }}">Register</a>                            
+                        </div>
+                </div>
+                <div class="side-nav secondary-bg">
+                    <form action="{{ url_for('books.search_for_book') }}" method="get" class="nav-search">
+                        <input class="fs-0" type="text" name='search_term'>
+                        <button class="btn-primary fs-0" type="submit">Book Search</button>
+                    </form>
+                    <nav class="side-nav-links">
+                        <ul class="nav-links fs-1 m-0">                             
+                            <li class="py-1"><a class="secondary-bg" href="{{ url_for('authenticate.login_user') }}">Log In</a></li>
+                        </ul>
+                    </nav>
+                </div>            
+            </nav>        
+        </header>
+                            
+               {% endif %}                              
+
+        <div class="site-body">
+            <div class="site-content">
+            {% block content %} {% endblock %}                    
+            </div>
+            <footer class="site-footer">
+                <div>
+                    <p>Bibliophilia</p>
+                    <p>Copyright <i class="fa fa-copyright" aria-hidden="true"> 2021</i></p>
+                </div>
+                <div>            
+                    <nav>
+                        <ul>
+                            <li>Book Search</li>
+                            <li>My Profile</li>
+                            <li>My Reviews</li>
+                            <li>Sign Out</li>                    
+                        </ul>
+                    </nav>
+                </div>
+                <div>
+                    <p>
+                        <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+                        <i class="fab fa-twitter fa-2x" aria-hidden="true"></i>
+                    </p>
+                </div>
+            </footer>            
+            
+        </div>
+        
+
+        {% if g.id %}
+    
+
     </div>
 
     
-    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/nav_bar.js') }}"></script>
+    <script>
+        let reviewNavButton = document.querySelector('.side-nav-links .nav-links .reviews-btn');
+        let profileNavButton = document.querySelector('.side-nav-links .nav-links .profiles-btn');
+        let showReviewNavMenu = document.querySelector('.side-nav .side-nav-links .nav-links .reviews-menu');    
+        let accountNavButton = document.querySelector('.account .username-account');
+        let accountNavMenu = document.querySelector('.account .account-menu');
+        let toggleSideNav = document.querySelector('.navbar .flex .toggle-side-nav .nav-toggle');
+        let sideNav = document.querySelector('.navbar .flex .side-nav');
+
+        reviewNavButton.addEventListener('click', () => {
+            showReviewNavMenu.classList.toggle('show-menu');           
+        });    
+        accountNavButton.addEventListener('click', () => {
+            accountNavMenu.classList.toggle('show-menu');                       
+        });
+
+        toggleSideNav.addEventListener('click', () => {
+            toggleSideNav.classList.toggle('rotate-toggle') 
+            sideNav.classList.toggle('show-side-nav')                       
+        });
+    </script>
+    {% else %}
+    
+    <script>
+    
+        let accountNavButton = document.querySelector('.account .username-account');
+        let accountNavMenu = document.querySelector('.account .account-menu');
+        let toggleSideNav = document.querySelector('.navbar .flex .toggle-side-nav .nav-toggle');
+        let sideNav = document.querySelector('.navbar .flex .side-nav');
+        
+        accountNavButton.addEventListener('click', () => {
+            accountNavMenu.classList.toggle('show-menu');                       
+        });
+
+        toggleSideNav.addEventListener('click', () => {
+            toggleSideNav.classList.toggle('rotate-toggle') 
+            sideNav.classList.toggle('show-side-nav')                       
+        })
+    </script>
+    {% endif %}
     {% block script %} {% endblock %}
 </body>
 </html>

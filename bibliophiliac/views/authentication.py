@@ -1,15 +1,17 @@
-from flask import Blueprint 
-from flask.globals import request, g, session
+from flask import Blueprint
+from flask.globals import request, g, session, current_app
 from flask import redirect, url_for, flash, render_template
 from sqlalchemy.exc import IntegrityError
 from bibliophiliac.views.database import access_database
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
+import os, shutil
 
+basedir = os.path.abspath(os.path.dirname(__name__))                
 bp = Blueprint('authenticate', __name__)
 
 @bp.route('/register', methods=['GET', 'POST'])
-def register():
+def register_user():
     """Handle the register request"""
     if request.method == 'POST':
         username = request.form.get('username')
@@ -26,7 +28,8 @@ def register():
                 db.execute("INSERT INTO users (name, password) VALUES (:username, :password)", {'username': username, 
                 'password':generate_password_hash(password)})
                 db.commit()
-                return redirect(url_for('authenticate.login'))
+                shutil.copy(basedir + current_app.config['DEFAULT_AVATAR_IMAGE'], os.path.join(basedir + current_app.config['AVATARS_FOLDER'], username))
+                return redirect(url_for('authenticate.login_user'))
             except IntegrityError:
                 error = "Username already taken."
             
@@ -35,7 +38,7 @@ def register():
     return render_template('log_auth/register.html')
 
 @bp.route('/login', methods=['GET', 'POST'])
-def login():
+def login_user():
     """Handle the login request"""
     if request.method == 'POST':
         username = request.form['username']
@@ -49,13 +52,13 @@ def login():
             error = 'Password required for logging'
         elif not error:
             db = access_database()            
-            user = db.execute("SELECT * FROM users WHERE name=:name", {"name": username}).fetchone()
+            user_data = db.execute("SELECT * FROM users WHERE name=:name", {"name": username}).fetchone()
             
-            if user and check_password_hash(user['password'], password): 
-                session['user_id'] = user['id']
-                session['user_name'] = user['name']
+            if user_data and check_password_hash(user_data['password'], password): 
+                session['user_id'] = user_data['id']
+                session['user_name'] = user_data['name']
                 # return render_template('reviews/search.html')
-                return redirect(url_for('books.search'))
+                return redirect(url_for('books.search_for_book'))
             else:
                 error = 'Wrong username and/or password.'
         flash(error)
@@ -64,12 +67,12 @@ def login():
 
 
 @bp.route('/logout')
-def logout():    
+def logout_user():    
     if 'user_name' in session:        
         session.pop('user_id')
         session.pop('user_name')     
            
-    return redirect(url_for('authenticate.login'))
+    return redirect(url_for('authenticate.login_user'))
 
 @bp.before_app_request
 def load_user_information():
@@ -77,8 +80,9 @@ def load_user_information():
     if session.get('user_name', None):
         g.username = session['user_name']
         g.id = session['user_id']
-        
+        g.profile_url = f'imgs/avatars/{g.username}'
 
+    
 def check_user_permission(view):
     """Check if user has priviledges to perform tasks"""
     @wraps(view)
@@ -87,6 +91,6 @@ def check_user_permission(view):
            login.  
         """
         if 'id' not in g:
-            return redirect(url_for('authenticate.login'))
+            return redirect(url_for('authenticate.login_user'))
         return view(**kwargs)
     return wrapper 
