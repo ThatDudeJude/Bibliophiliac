@@ -60,18 +60,18 @@
         {% endif %}
         <table class="reviews-profile card">            
             <tbody>
-                <tr><th>Number of Reviews</th><td>:</td><td>{{ total_reviews }}</td></tr>
-                <tr><th>Total Ratings Average</th><td>:</td><td>{{ average_rating_score }}</td></tr>            
+                <tr><th>Number of Reviews</th><td>:</td><td>{{ review_stats.total_reviews }}</td></tr>
+                <tr><th>Total Ratings Average</th><td>:</td><td>{{ review_stats.average_rating }}</td></tr>            
             </tbody>
         </table>
         <div class="books-reviewed">
             <button id="reviewed-books-button" class="btn-primary">Books Reviewed <i class="fa fa-caret-down" aria-hidden="true"></i></button>            
             <div class="all-books" id="show-books">  
                 {% if user_reviews %}             
-                {% for review in user_reviews %}     
-                <div class="user-reviewed-books card">                                
+                {% for review, book in user_reviews %}     
+                <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="user-reviewed-books card">                                
                     <div class="img px-1">
-                        <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="">
+                        <img src="{{ book.image }}" alt="">
                     </div>
                     <div class="info px-1">
                         <table>
@@ -83,7 +83,7 @@
                     <div class="user-review">
                         <p class="fs-1">Rating: {{ review.rating }} <img src="{{ url_for('static', filename='imgs/ratings/rating_{}.png'.format(review.rating)) }}" alt=""></p>                            
                     </div>                      
-                </div>                    
+                </a>                    
                 {% endfor %}
                 {% else %}
                 

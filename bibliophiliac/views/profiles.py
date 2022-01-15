@@ -5,12 +5,34 @@ from sqlalchemy.exc import IntegrityError, ArgumentError,  UnsupportedCompilatio
 # from werkzeug.utils import secure_filename
 from bibliophiliac.views.database import access_database
 from bibliophiliac.views.authentication import check_user_permission 
-import os, imghdr
+import os, imghdr, requests
 
 
 
 bp = Blueprint('profile', __name__) 
 basedir = os.path.abspath(os.path.dirname(__name__))                
+
+def fetch_from_api(isbn):
+    try:
+        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
+        data = res.json()
+        book_data = data['items'][0]['volumeInfo']
+        return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
+    except:
+       return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
+
+def search_books_image(books_results):
+    api_data = []
+    for result in books_results:
+        try:
+            res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(result.isbn))
+            data = res.json()
+            books_data = data['items'][0]['volumeInfo']
+            api_data.append({'image': books_data['imageLinks']['thumbnail']})
+        except:
+            api_data.append({'image': url_for('static', filename='imgs/Background6.png')})
+    books_results = zip(books_results, api_data)
+    return books_results
 
 @bp.route('/profile/<string:name>', methods=['GET'])
 @check_user_permission
@@ -23,6 +45,7 @@ def show_user_profile(name):
         if name == g.get('username', None):
             try:
                 logged_in_user_reviews = db.execute("SELECT * FROM reviews JOIN books ON books.isbn=reviews.book_isbn WHERE name_id=:id", {"id": g.id}).fetchall()
+                review_stats = db.execute('WITH review_stats AS (SELECT name_id, COUNT(*) AS total_reviews, ROUND(AVG(rating), 1) AS average_rating FROM reviews GROUP BY name_id) SELECT * FROM review_stats WHERE name_id=:id', {'id': g.id}).fetchone()
                 user_reviews = logged_in_user_reviews
                 can_edit = True
             except ArgumentError:
@@ -30,6 +53,7 @@ def show_user_profile(name):
         elif name:
             try:            
                 user_reviews = db.execute("SELECT * FROM users JOIN reviews ON reviews.name_id=users.id JOIN books ON books.isbn=reviews.book_isbn WHERE name=:name", {"name": name}).fetchall()
+                review_stats = db.execute('WITH review_stats AS (SELECT name_id, COUNT(*) AS total_reviews, ROUND(AVG(rating), 1) AS average_rating FROM reviews GROUP BY name_id) SELECT * FROM review_stats JOIN users ON users.id=name_id WHERE users.name=:name', {'name': name}).fetchone()
                             
             except ArgumentError:
                 error = "Invalid Request!"
@@ -37,16 +61,11 @@ def show_user_profile(name):
         if error:
             flash(error)
             return render_template('error.html'), 404
-        else:
-            total_reviews = len(user_reviews)
-            total_ratings = 0
-            average_rating_score = 0            
-            if total_reviews:
-                for review in user_reviews:
-                    total_ratings += int(review.rating)
-                average_rating_score = total_ratings/total_reviews        
+        elif user_reviews is not None and user_reviews != []:
+            user_reviews = zip(user_reviews, [fetch_from_api(book.isbn) for book in user_reviews])
+
                                    
-        return render_template('reviews/profile.html', user_reviews=user_reviews, total_reviews=total_reviews, average_rating_score=average_rating_score, can_edit=can_edit, username=user_name)
+        return render_template('reviews/profile.html', user_reviews=user_reviews, review_stats=review_stats, can_edit=can_edit, username=user_name)
     
 
 def validate_avatar(file_stream):

@@ -207,6 +207,17 @@ div.search-filter label{
     display: block;
 }
 
+.alert-card {
+    max-width: 500px;
+    min-width: 200px;
+    text-align: center;
+    margin: 20px auto;     
+}
+
+.alert-card p {
+    line-height: 2.5rem;   
+}
+
 @media (max-width: 2000px) {
     .results {
         width: 50%;

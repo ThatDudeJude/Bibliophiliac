@@ -8,6 +8,53 @@ import requests
 
 bp = Blueprint('books', __name__)
 
+def fetch_from_api(isbn):
+    try:
+        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
+        data = res.json()
+        book_data = data['items'][0]['volumeInfo']
+        return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
+    except:
+       return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
+
+def search_books_results_api(books_results):
+    if books_results is not None and books_results != []:
+        api_data = []
+        api_data = []
+        for result in books_results:
+            try:
+                res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(result.isbn))
+                data = res.json()
+                books_data = data['items'][0]['volumeInfo']
+                api_data.append({'description': books_data['description'], 'image': books_data['imageLinks']['thumbnail']})
+            except:
+                api_data.append({'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')})
+        books_results = zip(books_results, api_data)
+    return books_results
+
+def search_book_info(isbn):    
+    try:
+        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
+        data = res.json()
+        book_data = data['items'][0]['volumeInfo']
+        google_books_data = {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
+    except:
+        google_books_data = {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
+    return google_books_data
+
+def search_books_image(books_results):
+    api_data = []
+    for result in books_results:
+        try:
+            res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(result.isbn))
+            data = res.json()
+            books_data = data['items'][0]['volumeInfo']
+            api_data.append({'image': books_data['imageLinks']['thumbnail']})
+        except:
+            api_data.append({'image': url_for('static', filename='imgs/Background6.png')})
+    books_results = zip(books_results, api_data)
+    return books_results
+
     
 @bp.route('/search', methods = ['GET'])  
 @check_user_permission # public books info first if not logged in
@@ -28,19 +75,11 @@ def search_for_book():
             + "title ILIKE :term OR " + "author ILIKE :term OR " + "year ILIKE :term;", 
             {'term': f'%{search_query}%'}).fetchall()                        
         is_successful = True
-    if search_results == []:                        
+    if search_results == [] or search_results is None:                        
         message = f"Search for '{request.args.get('search_filter', '')}: {search_query}' yielded 0 results.".capitalize()            
-    if search_results is not None and search_results != []:
-        api_data = []
-        for result in search_results:
-            try:
-                res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(result.isbn))
-                data = res.json()
-                book_data = data['items'][0]['volumeInfo']
-                api_data.append({'avg': book_data['averageRating'], 'rating_avg':book_data['ratingsCount'], 'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']})
-            except:
-                api_data.append({'avg': 'n/a', 'rating_avg':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')})
-        search_results = zip(search_results, api_data)
+    else: 
+        # search_results = search_books_results_api(search_results)
+        search_results = zip(search_results, [fetch_from_api(result.isbn) for result in search_results])
 
     return render_template('reviews/search.html', is_successful=is_successful, message=message, results_list=search_results)
 
@@ -57,8 +96,9 @@ def find_review(isbn):
         sql_review_query = "SELECT * FROM reviews WHERE book_isbn=:isbn_result AND name_id=:id"
         existing_user_review = db.execute(sql_review_query, {'isbn_result': isbn, 'id':g.id }).fetchone()
         login_user_review_exists = True if existing_user_review else False
+    google_books_data = fetch_from_api(isbn)
         
-    return render_template('reviews/book_reviews.html', book_results=book_results, book_reviews=book_reviews, user_review_exists=login_user_review_exists, book_stats=book_stats )
+    return render_template('reviews/book_reviews.html', book_results=book_results, book_reviews=book_reviews, user_review_exists=login_user_review_exists, book_stats=book_stats, google_books=google_books_data )
 
     
 @bp.route('/review/<string:isbn>', methods=["GET", "POST"])
@@ -66,7 +106,7 @@ def find_review(isbn):
 def add_review(isbn):
     if request.method == 'POST':
         rating = request.form.get("rating")
-        opinion =request.form.get("review-input")
+        opinion =request.form.get("user_review")
         error = None
         if rating == '0':
             error = "Your rating is required!"
@@ -95,7 +135,9 @@ def fetch_user_reviews(id):
     if reviews_list == []:
         message = "You have no reviews yet"    
         average_rating_score = None    
-    
+    else:
+        # reviews_list = search_books_image(reviews_list)
+        reviews_list = zip(reviews_list, [fetch_from_api(book.isbn) for book in reviews_list])
     return render_template('reviews/my_reviews.html', reviews_list=reviews_list, message=message, review_stats=review_stats)
 
 @bp.route('/all_reviews')
@@ -107,5 +149,8 @@ def fetch_all_reviews():
     total = len(reviews_list)
     if reviews_list == []:
         message = "No reviews added yet!"    
+    else:
+        # reviews_list = search_books_image(reviews_list)
+        reviews_list = zip(reviews_list, [fetch_from_api(book.isbn) for book in reviews_list])
         
     return render_template('reviews/all_reviews.html', reviews_list=reviews_list, message=message, total=total)

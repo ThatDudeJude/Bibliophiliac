@@ -15,15 +15,15 @@
         <div class="reviewed-books-stats card">                        
             <table class="card">
                 <tbody>
-                    <tr><th>Reviewed Books</th><td>:</td><td>{{ total }}</td></tr>                    
+                    <tr><th>Total Books Reviewed</th><td>:</td><td>{{ total }}</td></tr>                    
                 </tbody>
             </table>
         </div>
         {{ type }}
-        {% for review in reviews_list %}                
+        {% for review, images in reviews_list %}               
         <div class="results card">            
             <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="img px-1">
-               <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="">
+               <img src="{{ images.image }}" alt="">
             </a>
             <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="info px-1">
                 <table>

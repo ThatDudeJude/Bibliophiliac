@@ -4,7 +4,7 @@ def test_add_review(client, authenticate):
     with client:
         authenticate.login()
         client.get('/review/0316228532')
-        response = client.post('/review/0316228532', data={'rating': '5', 'review_input': 'Really good book'})
+        response = client.post('/review/0316228532', data={'rating': '5', 'user_review': 'Really good book'})
         assert response.status == '302 FOUND'
         response = client.get('/review/0316228532')
         assert response.status == '200 OK'
@@ -23,7 +23,7 @@ def test_add_review_input_errors(rating, review_input, message, client, authenti
     with client:
         authenticate.login()
         client.get('/review/0316228532')
-        response = client.post('/review/0316228532', data={'rating': rating, 'review_input': review_input})
+        response = client.post('/review/0316228532', data={'rating': rating, 'user_review': review_input})
         assert response.status == '302 FOUND'
         response = client.get('/review/0316228532')
         assert response.status == '200 OK'
@@ -33,7 +33,7 @@ def test_add_review_invalid_request(client, authenticate):
     with client:
         authenticate.login()
         client.get('/review/0316228532')
-        response = client.post('/review/0', data={'rating': '5', 'review_input': 'Really good'})
+        response = client.post('/review/0', data={'rating': '5', 'user_review': 'Really good'})
         assert response.status == '302 FOUND'
         response = client.get('/review/0316228532')
         assert response.status == '200 OK'
@@ -41,24 +41,38 @@ def test_add_review_invalid_request(client, authenticate):
 
         authenticate.logout()
         client.get('/review/0316228532')
-        response = client.post('/review/0316228532', data={'rating': '5', 'review_input': 'Really good'})
-        response = client.post('/review/0316228532', data={'rating': '5', 'review_input': 'Really good'})
+        response = client.post('/review/0316228532', data={'rating': '5', 'user_review': 'Really good'})
+        response = client.post('/review/0316228532', data={'rating': '5', 'user_review': 'Really good'})
         assert response.status == '302 FOUND'
         assert b'redirect' in response.data
 
 def test_all_reviews(client, authenticate):
     with client:
         authenticate.login()
+        response = client.get('/your_reviews/1')
+        assert response.status == '200 OK'
+        # assert b'No Reviews' in response.data
+        assert b'My Reviews' in response.data
+        assert b'0' in response.data
+
         client.get('/review/0099481685')
-        client.post('/review/0099481685', data={'rating': '5', 'review_input': 'Really good'})
+        client.post('/review/0099481685', data={'rating': '5', 'user_review': 'Really good'})
         response = client.get('/your_reviews/1')
         assert response.status == '200 OK'
         assert b'Grisham' in response.data
-        assert b'Your' in response.data
+        assert b'My Reviews' in response.data
+        assert b'Number of Reviews' in response.data
+
+        response = client.get('/your_reviews/1')
+        assert response.status == '200 OK'
+        assert b'Grisham' in response.data
+        assert b'test client' in response.data
 
         response = client.get('/all_reviews')
         assert response.status == '200 OK'
         assert b'Grisham' in response.data
-        assert b'Your' in response.data
+        assert b'test client' in response.data
+        assert b'All Reviews' in response.data
+        assert b'Reviewed Books' in response.data
 
         

@@ -47,12 +47,12 @@
 
         {% for result, book in results_list %}        
         <!-- <a class="flex_results" href="{{ url_for('books.find_review', isbn=result.isbn) }}"></a> -->
-        <div class="results card" href="{{ url_for('books.find_review', isbn=result.isbn) }}">            
-            <a class="img px-1">
+        <div class="results card" >            
+            <a class="img px-1" href="{{ url_for('books.find_review', isbn=result.isbn) }}">
                 <img src="{{ book.image }}" alt="">
                 <!-- <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt=""> -->
             </a>
-            <a class="info px-1">
+            <a class="info px-1" href="{{ url_for('books.find_review', isbn=result.isbn) }}">
                 <table>
                     <tr><th>Title</th><td>: </td><td>{{ result.title }}</td></tr>
                     <tr><th>Author(s)</th><td>: </td><td>{{ result.author }}</td></tr>
@@ -72,12 +72,9 @@
         </div>
         {% endfor %}
         {% else %}   
-        <div class="reviewed-books-stats card">                        
-            <table class="card">
-                <tbody>
-                    <tr><th>Search Results For <q>{{ request.args.get("search_filter", '') }}</q></th><td>:</td><td>{{ message }}</td></tr>                    
-                </tbody>
-            </table>
+        <div class="alert-card card" role="alert">                            
+                <p>{{ message }}</p>
+                
         </div>
         {% endif %}
     </div>

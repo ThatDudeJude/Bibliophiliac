@@ -105,6 +105,13 @@ button.reviews-btn:hover, button.profiles-btn:hover, button.username-account:hov
     width: 100%;
 }
 
+.account-menu a:nth-child(2) {
+    display: none;
+}
+.account-menu a:last-child {
+    display: block;
+}
+
 .small-avatar {
     /* display: inline-block; */
     /* grid-column: 1 / span 1; */

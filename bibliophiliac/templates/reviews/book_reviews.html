@@ -12,7 +12,7 @@
         <h1 class="review-header card fs-2">Review Stats</h1>
         <div class="review-info card" id="stats">                            
             <div class="img px-1">
-                <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="">
+                <img src="{{ google_books.image }}" alt="">
             </div>
             <div class="info px-1 ">
                 <table >
@@ -34,28 +34,28 @@
                             
                         </thead>
                         <tbody>                                                            
-                                {% if book_reviews %}                                                                
+                                {% if book_reviews is sequence %}                                                                
                             <tr>
                                 <th>Number of Reviews</th>
                                 <td>{{ book_stats.total_reviews }}</td>                                                                
-                                <td>{{ book_data.total_reviews }}</td>
+                                <td>{{ google_books.total_reviews }}</td>
                             </tr>
                             <tr>
                                 <th>Average Rating</th>                                
                                 <td>{{ book_stats.average_rating }}</td>                                                                                                
-                                <td>{{ book_data.average_rating }}</td>
+                                <td>{{ google_books.average_rating }}</td>
                             </tr>
                             
                             {% else %}
                             <tr>
                                 <th>Number of Reviews</th>
                                 <td>0</td>                                                                
-                                <td>{{ book_data.total_reviews }}</td>
+                                <td>{{ google_books.total_reviews }}</td>
                             </tr>
                             <tr>
                                 <th>Average Rating</th>                                
                                 <td>0</td>                                                                                                
-                                <td>{{ book_data.average_rating }}</td>
+                                <td>{{ google_books.average_rating }}</td>
                             </tr>
                                 {% endif %}                            
                         </tbody>
@@ -66,7 +66,7 @@
             <div class="description-sect p-1">
                 <button class="btn-secondary description-btn">Book Description <i class="fas fa-caret-down    "></i></button>
                 <div class="description">
-                    <p class="p-1 fs-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum odit dolore facilis vel beatae itaque voluptas delectus mollitia impedit asperiores?</p>
+                    <p class="p-1 fs-0">{{ google_books.description }}</p>
                 </div>
                 
             </div>
@@ -155,7 +155,7 @@
                         </div>
                     </div>
                     <div>
-                        <textarea class="review-text" name="review-input" id="" rows="5"></textarea>
+                        <textarea class="review-text" name="user_review" id="" rows="5"></textarea>
                     </div>
                     <div>
                         <button type="submit" class="btn-primary"> Submit Review </button>

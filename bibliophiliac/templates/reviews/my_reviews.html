@@ -22,10 +22,10 @@
             </table>
         </div>
         
-            {% for review in reviews_list %}                
+            {% for review, images in reviews_list %}                
             <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="user-reviewed-books card">            
                 <div class="img px-1">
-                    <img src="{{ url_for('static', filename='imgs/Background6.png') }}" alt="">
+                    <img src="{{ images.image }}" alt="">
                 </div>
                 <div class="info px-1">
                     <table>
