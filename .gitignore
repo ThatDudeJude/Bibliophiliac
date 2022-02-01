@@ -3,6 +3,5 @@
 *.sql
 *.db
 ./instance/*
-config.py
 venv
 ./tests/*
