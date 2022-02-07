@@ -25,7 +25,7 @@ def initialize_database():
     """
 
     engine = create_engine(current_app.config["DATABASE_URL"])
-    engine.execute("DROP TABLE IF EXISTS users; DROP TABLE IF EXISTS books; DROP TABLE IF EXISTS reviews")
+    engine.execute("DROP TABLE IF EXISTS reviews; DROP TABLE IF EXISTS books; DROP TABLE IF EXISTS users")
     file = open(current_app.config["INITIALIZE_DB_FILE"])
     sql_query = text(file.read())
     engine.execute(sql_query)
