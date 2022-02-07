@@ -4,7 +4,7 @@ from instance.config import BOOKS_CSV
 class Config(object):
     TESTING=False 
     DEBUG=False 
-    INITIALIZE_DB_FILE='/bibliophiliac/schema.sql'
+    INITIALIZE_DB_FILE='./bibliophiliac/schema.sql'
 
 class ProductionConfig(Config):
     pass 
@@ -16,5 +16,5 @@ class TestingConfig(Config):
     TESTING=True 
     DEBUG=True 
     DATABASE_URL="postgresql:///test_bibliophiliac"
-    TEST_DB_FILE='/tests/dbase_test.sql'
-    BOOKS_CSV='/tests/test_books.csv'
+    TEST_DB_FILE='./tests/dbase_test.sql'
+    BOOKS_CSV='./tests/test_books.csv'
