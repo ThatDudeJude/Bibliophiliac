@@ -1,6 +1,5 @@
 *.pyc
 *.pem
-*.sql
 *.db
 ./instance/*
 venv
