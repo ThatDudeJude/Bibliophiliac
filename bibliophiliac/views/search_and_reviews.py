@@ -13,9 +13,12 @@ def fetch_from_api(isbn):
         res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
         data = res.json()
         book_data = data['items'][0]['volumeInfo']
-        return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
+        if 'imageLinks' in book_data.keys():
+            return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
+        else:
+            return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': url_for('static', filename='imgs/default_book_image.png')}
     except:
-       return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
+       return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/default_book_image.png')}
 
 def search_books_results_api(books_results):
     if books_results is not None and books_results != []:
@@ -28,7 +31,7 @@ def search_books_results_api(books_results):
                 books_data = data['items'][0]['volumeInfo']
                 api_data.append({'description': books_data['description'], 'image': books_data['imageLinks']['thumbnail']})
             except:
-                api_data.append({'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')})
+                api_data.append({'description': "n/a", 'image': url_for('static', filename='imgs/default_book_image.png')})
         books_results = zip(books_results, api_data)
     return books_results
 
@@ -39,7 +42,7 @@ def search_book_info(isbn):
         book_data = data['items'][0]['volumeInfo']
         google_books_data = {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
     except:
-        google_books_data = {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
+        google_books_data = {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/default_book_image.png')}
     return google_books_data
 
 def search_books_image(books_results):
@@ -51,7 +54,7 @@ def search_books_image(books_results):
             books_data = data['items'][0]['volumeInfo']
             api_data.append({'image': books_data['imageLinks']['thumbnail']})
         except:
-            api_data.append({'image': url_for('static', filename='imgs/Background6.png')})
+            api_data.append({'image': url_for('static', filename='imgs/default_book_image.png')})
     books_results = zip(books_results, api_data)
     return books_results
 
@@ -95,9 +98,9 @@ def find_review(isbn):
     if g.get('id', None):
         sql_review_query = "SELECT * FROM reviews WHERE book_isbn=:isbn_result AND name_id=:id"
         existing_user_review = db.execute(sql_review_query, {'isbn_result': isbn, 'id':g.id }).fetchone()
-        login_user_review_exists = True if existing_user_review else False
+        login_user_review_exists = True if existing_user_review else False        
     google_books_data = fetch_from_api(isbn)
-        
+    # print(data['items'][0]['volumeInfo']['imageLinks']['thumbnail'])    
     return render_template('reviews/book_reviews.html', book_results=book_results, book_reviews=book_reviews, user_review_exists=login_user_review_exists, book_stats=book_stats, google_books=google_books_data )
 
     
