@@ -163,6 +163,10 @@ header.navbar .flex .show-side-nav {
     left: 0px;
 }
 
+header.navbar .flex .hide-side-nav {            
+    left: -250px;
+}
+
 
 
 .toggle-side-nav .nav-toggle {        
