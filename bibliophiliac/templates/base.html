@@ -137,9 +137,14 @@
             sideNav.classList.toggle('show-side-nav') 
             sideNav.classList.toggle('hide-side-nav')                                             
         });
-        document.querySelector('.site-content').addEventListener('click', () => {
-            sideNav.className = 'hide-side-nav';
-            console.log("Focus");
+        document.querySelector('.site-content').addEventListener('click', (event) => {
+       
+            if (Array.from(sideNav.classList).includes('show-side-nav') && event.target.className !== 'side-nav') {
+                sideNav.classList.toggle('show-side-nav')                       
+                sideNav.classList.toggle('hide-side-nav');
+                toggleSideNav.classList.toggle('rotate-toggle');
+            }
+         
         })
     </script>
     {% else %}
@@ -160,17 +165,14 @@
             sideNav.classList.toggle('show-side-nav')                       
             sideNav.classList.toggle('hide-side-nav')                      
         })
-        document.querySelector('.site-content').addEventListener('focus', () => {
-            // sideNav.classList = sideNav.classList.filter(className => className != 'show-side-nav')
-            console.log("Blur");
-            if (Array.from(sideNav.classList).includes('show-side-nav')) {
+        document.querySelector('.site-content').addEventListener('click', (event) => {
+       
+            if (Array.from(sideNav.classList).includes('show-side-nav') && event.target.className !== 'side-nav') {
                 sideNav.classList.toggle('show-side-nav')                       
                 sideNav.classList.toggle('hide-side-nav');
                 toggleSideNav.classList.toggle('rotate-toggle');
             }
-            
-            // console.log(sideNav.className);
-            // sideNav.className = 'hide-side-nav'
+         
         })
     </script>
     {% endif %}
