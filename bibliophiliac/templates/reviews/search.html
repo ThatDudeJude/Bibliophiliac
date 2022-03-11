@@ -94,6 +94,14 @@
     for (let i = 0; i < numberOfDescriptions; i++) {
         bookDescriptionToggleButtons[i].addEventListener('click', () => {
             descriptionText[i].classList.toggle('show-description');
+            let textContent = bookDescriptionToggleButtons[i].innerHTML;
+        if (textContent.includes("fa-caret-down")) {
+            textContent = textContent.replace('down','up');
+        }
+        else if (textContent.includes("fa-caret-up")) {
+            textContent = textContent.replace('up',"down");
+        }
+        bookDescriptionToggleButtons[i].innerHTML = textContent;
         });
     }
 </script>

@@ -8,4 +8,3 @@ AVATARS_FOLDER = '/bibliophiliac/static/imgs/avatars'
 DEFAULT_AVATAR_IMAGE= '/bibliophiliac/static/imgs/default_avatar.png'
 # MAX_CONTENT_LENGTH = 7 * 1000 * 1000
 # SESSSION_TYPE='filesystem'
-
