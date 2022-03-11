@@ -137,7 +137,8 @@
             sideNav.classList.toggle('show-side-nav') 
             sideNav.classList.toggle('hide-side-nav')                                             
         });
-        document.querySelector('.site-content').addEventListener('click', (event) => {
+        document.querySelector('.site-body').addEventListener('click', (event) => {
+            // sideNav.classList = sideNav.classList.filter(className => className != 'show-side-nav')
        
             if (Array.from(sideNav.classList).includes('show-side-nav') && event.target.className !== 'side-nav') {
                 sideNav.classList.toggle('show-side-nav')                       
@@ -164,8 +165,9 @@
             sideNav.classList.toggle('show-side-nav')                       
             sideNav.classList.toggle('hide-side-nav')                      
         })
-        document.querySelector('.site-content').addEventListener('click', (event) => {
-       
+        document.querySelector('.site-body').addEventListener('click', (event) => {
+            
+            
             if (Array.from(sideNav.classList).includes('show-side-nav') && event.target.className !== 'side-nav') {
                 sideNav.classList.toggle('show-side-nav')                       
                 sideNav.classList.toggle('hide-side-nav');
