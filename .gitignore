@@ -1,6 +1,6 @@
 *.pyc
 *.pem
 *.db
-./instance/**
+/instance/**
 venv
-./tests/**
+/tests/**
