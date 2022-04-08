@@ -28,7 +28,13 @@ def register_user():
                 db.execute("INSERT INTO users (name, password) VALUES (:username, :password)", {'username': username, 
                 'password':generate_password_hash(password)})
                 db.commit()
-                shutil.copy(basedir + current_app.config['DEFAULT_AVATAR_IMAGE'], os.path.join(basedir + current_app.config['AVATARS_FOLDER'], username))
+                src = basedir + current_app.config['DEFAULT_AVATAR_IMAGE']
+                dest = basedir + current_app.config['AVATARS_FOLDER']
+                old_name = os.path.join(dest, 'default_avatar.png')
+                new_name = os.path.join(dest, username)
+                shutil.copy2(src, dest)
+                os.rename(old_name, new_name)
+                
                 # shutil.copy(basedir + current_app.config['DEFAULT_AVATAR_IMAGE'], os.path.join(basedir + current_app.config['AVATARS_FOLDER'], username + '.png'))
                 return redirect(url_for('authenticate.login_user'))
             except IntegrityError:
