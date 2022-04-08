@@ -23,8 +23,8 @@
                     <p>Bibliophilia</p>
                 </div>    
                 <div class="account fs-0">                                
-                {% if g.id %}
-                    <span class="small-avatar"><img src="{{ url_for('static', filename='imgs/avatars/'+g.username) }}" alt="" id="nav-avatar"></span> <button class="username-account primary-bg btn-primary fs-0">{{ g.username }} <i class="fa fa-caret-down" aria-hidden="true"></i> </button>
+                {% if g.id %}                
+                    <span class="small-avatar"><img src="{{ url_for('static', filename=g.profile_url) }}" alt="" id="nav-avatar"></span> <button class="username-account primary-bg btn-primary fs-0">{{ g.username }} <i class="fa fa-caret-down" aria-hidden="true"></i> </button>
                         <div class="account-menu">                         
                             <a class="secondary-bg py-1 fs-0" href="{{ url_for('books.fetch_user_reviews', id=g.id) }}">My Reviews</a>
                             <a class="secondary-bg py-1 fs-0" href="{{ url_for('books.fetch_all_reviews') }}">All Reviews</a>

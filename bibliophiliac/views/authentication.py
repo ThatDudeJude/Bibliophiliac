@@ -10,6 +10,12 @@ import os, shutil, glob
 basedir = os.path.abspath(os.path.dirname(__name__))                
 bp = Blueprint('authenticate', __name__)
 
+def find_profile_image(filename):
+    file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], filename + '*'))][0]
+    return file
+
+
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register_user():
     """Handle the register request"""
@@ -31,11 +37,9 @@ def register_user():
                 src = basedir + current_app.config['DEFAULT_AVATAR_IMAGE']
                 dest = basedir + current_app.config['AVATARS_FOLDER']
                 old_name = os.path.join(dest, 'default_avatar.png')
-                new_name = os.path.join(dest, username)
+                new_name = os.path.join(dest, username + ".png")                
                 shutil.copy2(src, dest)
-                os.rename(old_name, new_name)
-                
-                # shutil.copy(basedir + current_app.config['DEFAULT_AVATAR_IMAGE'], os.path.join(basedir + current_app.config['AVATARS_FOLDER'], username + '.png'))
+                os.rename(old_name, new_name)                                
                 return redirect(url_for('authenticate.login_user'))
             except IntegrityError:
                 error = "Username already taken."
@@ -87,12 +91,13 @@ def load_user_information():
     if session.get('user_name', None):
         g.username = session['user_name']
         g.id = session['user_id']
-        g.profile_url = f'imgs/avatars/{g.username}'
 
-        # file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username + '*'))][0]
-        # avatar, extension = os.path.splitext(file)
+        if g.username:
+            file = find_profile_image(g.username)
+            _, extension = os.path.splitext(file)
+            g.profile_url = f'imgs/avatars/{g.username + extension}'
+        
 
-        # g.profile_url = f'imgs/avatars/{g.username}{extension}'
 
     
 def check_user_permission(view):

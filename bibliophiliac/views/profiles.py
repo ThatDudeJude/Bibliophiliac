@@ -13,14 +13,6 @@ from bibliophiliac.views.search_and_reviews import fetch_from_api
 bp = Blueprint('profile', __name__) 
 basedir = os.path.abspath(os.path.dirname(__name__))                
 
-# def fetch_from_api(isbn):
-#     try:
-#         res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
-#         data = res.json()
-#         book_data = data['items'][0]['volumeInfo']
-#         return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
-#     except:
-#        return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
 
 def search_books_image(books_results):
     api_data = []
@@ -67,7 +59,8 @@ def show_user_profile(name):
 
                                    
         return render_template('reviews/profile.html', user_reviews=user_reviews, review_stats=review_stats, can_edit=can_edit, username=user_name)
-    
+
+
 
 def validate_avatar(file_stream):
     header = file_stream.read(512)
@@ -78,6 +71,9 @@ def validate_avatar(file_stream):
     else:
         return None
 
+def find_profile_image(filename):
+    file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], filename + '*'))][0]
+    return file
 
 @bp.route('/profile/update/<int:id>', methods=['GET', 'POST'])
 @check_user_permission
@@ -97,19 +93,16 @@ def update_profile(id):
             if file.filename:
                 extension = os.path.splitext(file.filename)[1]
                 allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif']
-                if validate_avatar(file.stream) == extension and extension in allowed_extensions:                                
-                    # file.save(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username + extension))                                        
-                    file.save(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username))                                        
-            elif oldname != g.username:
-                # file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], oldname + '*'))][0]
-                # print("old filename", file)
-                # avatar, extension = os.path.splitext(file)
-                
-                # new_filename = os.path.join(basedir + current_app.config['AVATARS_FOLDER'], replacing_name + extension)
-                # print("new filename", new_filename)
-                # os.rename(file, new_filename)
-                os.rename(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], oldname), os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username))                                        
+                if validate_avatar(file.stream) == extension and extension in allowed_extensions:                                                    
+                    image_file = find_profile_image(oldname)
+                    os.remove(image_file)
+                    file.save(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username + extension))                                        
+            elif oldname != g.username:                
+                file = find_profile_image(oldname)
+                print(file)                
+                avatar, extension = os.path.splitext(file)
+                print("extension", extension)
+                os.rename(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], oldname + extension), os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username + extension))                                        
         except IntegrityError:
-            flash(f'Username {g.username} already exists!')
-            # return render_template('error.html'), 422                                   
+            flash(f'Username {g.username} already exists!')            
         return redirect(url_for('profile.show_user_profile', name=g.username))

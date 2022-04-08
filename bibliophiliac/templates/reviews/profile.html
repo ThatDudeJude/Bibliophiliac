@@ -29,7 +29,7 @@
             {% endfor %}
             <form action="{{ url_for('profile.update_profile', id=g.id) }}" method="post" enctype="multipart/form-data">
                             
-            <div id="avatar">
+            <div id="avatar">                
                 <img src="{{ url_for('static', filename=g.profile_url) }}" id="avatar-img">                
             </div>
             <input class="hidden" type="file" name="avatar_photo" id="add-img" placeholder="Photo" capture accept=".gif, .jpg, .jpeg, .png">
