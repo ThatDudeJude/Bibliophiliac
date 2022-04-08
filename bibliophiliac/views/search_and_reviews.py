@@ -80,8 +80,7 @@ def search_for_book():
         is_successful = True
     if search_results == [] or search_results is None:                        
         message = f"Search for '{request.args.get('search_filter', '')}: {search_query}' yielded 0 results.".capitalize()            
-    else: 
-        # search_results = search_books_results_api(search_results)
+    else:         
         search_results = zip(search_results, [fetch_from_api(result.isbn) for result in search_results])
 
     return render_template('reviews/search.html', is_successful=is_successful, message=message, results_list=search_results)

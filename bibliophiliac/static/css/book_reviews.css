@@ -132,12 +132,12 @@
 /* Reviews */
 
 .review {            
-    max-width: 90%;
+    max-width: 70%;
     min-width: 300px;            
 }        
 
 .review .review-header {
-    width: 90%;
+    width: 50%;
 }
 
 .users-reviews {
@@ -206,7 +206,7 @@
 /* Add Review  */
 
 .review-add {
-    width: 80%;
+    width: 50%;
     background-color: #19021a;
     padding: 20px 0;
     text-align: center;            
@@ -333,6 +333,11 @@ div.review-show .form-review {
     .info table th {
        width: 80px;
     }
+
+    .review .review-header {
+        width: 90%;
+    }
+    
 }   
 
 @media (max-width: 600px) {
@@ -346,6 +351,10 @@ div.review-show .form-review {
         min-width: 300px;
         /* column-gap: 10px; */
         align-items: center;                            
+    }
+
+    .review-header {
+        width: 80%;
     }
 
     .img {

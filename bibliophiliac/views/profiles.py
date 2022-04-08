@@ -5,21 +5,22 @@ from sqlalchemy.exc import IntegrityError, ArgumentError,  UnsupportedCompilatio
 # from werkzeug.utils import secure_filename
 from bibliophiliac.views.database import access_database
 from bibliophiliac.views.authentication import check_user_permission 
-import os, imghdr, requests
+import os, imghdr, requests, glob
+from bibliophiliac.views.search_and_reviews import fetch_from_api
 
 
 
 bp = Blueprint('profile', __name__) 
 basedir = os.path.abspath(os.path.dirname(__name__))                
 
-def fetch_from_api(isbn):
-    try:
-        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
-        data = res.json()
-        book_data = data['items'][0]['volumeInfo']
-        return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
-    except:
-       return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
+# def fetch_from_api(isbn):
+#     try:
+#         res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key=AIzaSyDniynUGFYHQi2ooiC-Q9G9PUDvu-TKVbY".format(isbn))
+#         data = res.json()
+#         book_data = data['items'][0]['volumeInfo']
+#         return {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
+#     except:
+#        return {'average_rating': 'n/a', 'total_reviews':"n/a", 'description': "n/a", 'image': url_for('static', filename='imgs/Background6.png')}
 
 def search_books_image(books_results):
     api_data = []
@@ -87,17 +88,28 @@ def update_profile(id):
             db = access_database()            
             file = request.files['avatar_photo']            
             replacing_name = request.form.get('new_name')            
+            oldname = g.username
             if g.username != replacing_name:
                 db.execute('UPDATE users SET name=:name WHERE id=:id', {"name": replacing_name, "id":id})
-                db.commit()
-                os.unlink(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username))
+                db.commit()                
                 session['user_name'] = replacing_name
                 g.username = replacing_name
-            extension = os.path.splitext(file.filename)[1]
-            allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif']
-            if validate_avatar(file.stream) == extension and extension in allowed_extensions:                                
-                file.save(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username))                                        
+            if file.filename:
+                extension = os.path.splitext(file.filename)[1]
+                allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+                if validate_avatar(file.stream) == extension and extension in allowed_extensions:                                
+                    # file.save(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username + extension))                                        
+                    file.save(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username))                                        
+            elif oldname != g.username:
+                # file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], oldname + '*'))][0]
+                # print("old filename", file)
+                # avatar, extension = os.path.splitext(file)
+                
+                # new_filename = os.path.join(basedir + current_app.config['AVATARS_FOLDER'], replacing_name + extension)
+                # print("new filename", new_filename)
+                # os.rename(file, new_filename)
+                os.rename(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], oldname), os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username))                                        
         except IntegrityError:
             flash(f'Username {g.username} already exists!')
             # return render_template('error.html'), 422                                   
-    return redirect(url_for('profile.show_user_profile', name=g.username))
+        return redirect(url_for('profile.show_user_profile', name=g.username))

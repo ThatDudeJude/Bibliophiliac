@@ -4,7 +4,9 @@ from flask.globals import g, current_app, session
 # from flask_session import Session
 from flask.cli import with_appcontext
 from sqlalchemy import text
-import click, csv
+import click, csv, os, glob
+
+basedir = os.path.abspath(os.path.dirname(__name__))                
 
 
 
@@ -37,6 +39,10 @@ def initialize_database():
         sql_query = f"INSERT INTO books (isbn, title, author, year) VALUES (%s, %s, %s, %s)"
         engine.execute(sql_query, (isbn, title, author, year))
 
+    # Delete existing avatar profiles
+    avatar_images  = glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], "*"))
+    for file in avatar_images:
+        os.remove(file)
 
     
 def close_db(e=None):

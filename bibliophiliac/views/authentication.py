@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from bibliophiliac.views.database import access_database
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
-import os, shutil
+import os, shutil, glob
 
 basedir = os.path.abspath(os.path.dirname(__name__))                
 bp = Blueprint('authenticate', __name__)
@@ -29,6 +29,7 @@ def register_user():
                 'password':generate_password_hash(password)})
                 db.commit()
                 shutil.copy(basedir + current_app.config['DEFAULT_AVATAR_IMAGE'], os.path.join(basedir + current_app.config['AVATARS_FOLDER'], username))
+                # shutil.copy(basedir + current_app.config['DEFAULT_AVATAR_IMAGE'], os.path.join(basedir + current_app.config['AVATARS_FOLDER'], username + '.png'))
                 return redirect(url_for('authenticate.login_user'))
             except IntegrityError:
                 error = "Username already taken."
@@ -81,6 +82,11 @@ def load_user_information():
         g.username = session['user_name']
         g.id = session['user_id']
         g.profile_url = f'imgs/avatars/{g.username}'
+
+        # file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], g.username + '*'))][0]
+        # avatar, extension = os.path.splitext(file)
+
+        # g.profile_url = f'imgs/avatars/{g.username}{extension}'
 
     
 def check_user_permission(view):

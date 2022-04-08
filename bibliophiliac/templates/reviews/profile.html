@@ -32,9 +32,9 @@
             <div id="avatar">
                 <img src="{{ url_for('static', filename=g.profile_url) }}" id="avatar-img">                
             </div>
-            <input class="hidden" type="file" name="avatar_photo" id="add-img" placeholder="Photo", required='' capture>
+            <input class="hidden" type="file" name="avatar_photo" id="add-img" placeholder="Photo" capture accept=".gif, .jpg, .jpeg, .png">
             <div class="btn-container">
-                <button id="avatar-btn" class="hidden btn-primary">Change Avatar</button>
+                <button id="avatar-btn" class="hidden btn-primary" type="button">Change Avatar</button>
             </div>            
             <div class="username">
                 <p  class="profile-name">Username: {{ g.username }}</p>
@@ -43,8 +43,9 @@
             </div>
 
             <div class="change-and-save">
-                <button id="profile-btn" class="btn-primary">Change Profile</button>
-                <button id="submit-btn" class="hidden btn-primary" type="submit">Save</button>
+                <button id="profile-btn" class="btn-primary" type='button'>Change Profile</button>
+                <input id="submit-btn" class="hidden btn-primary" type="submit" value="Save">
+                <button id="cancel-btn" class="hidden btn-primary" type='button'>Cancel</button>
             </div>
             </form>
         </div>
