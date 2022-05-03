@@ -4,7 +4,7 @@ from flask.globals import g, current_app, session
 # from flask_session import Session
 from flask.cli import with_appcontext
 from sqlalchemy import text
-import click, csv, os, glob
+import click, csv, os, glob, shutil
 
 basedir = os.path.abspath(os.path.dirname(__name__))                
 
@@ -41,9 +41,11 @@ def initialize_database():
 
     # Delete existing avatar profiles
     avatar_images  = glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], "*"))
-    for file in avatar_images:
+    for file in avatar_images:        
         os.remove(file)
-
+    original = basedir + current_app.config['DEFAULT_AVATAR_IMAGE']
+    destination = basedir + current_app.config['AVATARS_FOLDER'] + "/default_avatar.png"
+    shutil.copyfile(original, destination)
     
 def close_db(e=None):
     """Close access to database during request-response cleanup"""
