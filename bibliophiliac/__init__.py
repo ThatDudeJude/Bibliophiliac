@@ -8,9 +8,16 @@ from flask import redirect, url_for
 
 def create_app(testing=False, production=False):
     """"The application factory"""
-
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_pyfile("config.py")
+    if not production:
+        app = Flask(__name__, instance_relative_config=True)
+        app.config.from_pyfile("config.py")
+    else:
+        app = Flask(__name__)        
+        app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+        app.config['DATABASE_URL'] = os.getenv('DATABASE_URL')
+        app.config['SESSION_PERMANENT'] = os.getenv('SESSION_PERMANENT')
+        app.config['BOOKS_API_KEY'] = os.getenv('BOOKS_API_KEY')
+    
     if testing:
         app.config.from_object('config.TestingConfig')
     elif production:

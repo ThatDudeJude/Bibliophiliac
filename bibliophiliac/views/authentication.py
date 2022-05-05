@@ -12,6 +12,7 @@ bp = Blueprint('authenticate', __name__)
 
 def find_profile_image(filename):
     file = [file for file in glob.glob(os.path.join(basedir + current_app.config['AVATARS_FOLDER'], filename + '*'))][0]
+    print("Avatar File", file)
     return file
 
 

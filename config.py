@@ -1,10 +1,10 @@
-from instance.config import BOOKS_CSV
-
-
 class Config(object):
     TESTING=False 
     DEBUG=False 
     INITIALIZE_DB_FILE='./bibliophiliac/schema.sql'
+    BOOKS_CSV = "books.csv"
+    AVATARS_FOLDER = '/bibliophiliac/static/imgs/avatars'
+    DEFAULT_AVATAR_IMAGE= '/bibliophiliac/static/imgs/default_avatar.png'
 
 class ProductionConfig(Config):
     pass 
