@@ -94,13 +94,13 @@ def load_user_information():
         g.id = session['user_id']
 
         if g.username:
-            file = find_profile_image(g.username)
-            _, extension = os.path.splitext(file)
-            g.profile_url = f'imgs/avatars/{g.username + extension}'
-        
-
-
-    
+            try:
+                file = find_profile_image(g.username)
+                _, extension = os.path.splitext(file)
+                g.profile_url = f'imgs/avatars/{g.username + extension}'
+            except:
+                pass
+            
 def check_user_permission(view):
     """Check if user has priviledges to perform tasks"""
     @wraps(view)
