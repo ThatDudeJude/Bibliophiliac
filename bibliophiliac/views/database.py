@@ -15,7 +15,7 @@ def access_database():
         Otherwise create a connection and store it in g for new requests.
     """
     if 'db' not in g:
-        engine = create_engine(current_app.config["DATABASE_URL"])
+        engine = create_engine(current_app.config["DATABASE_URL"].replace("postgres", "postgresql"))
         db = scoped_session(sessionmaker(bind=engine))
         g.db = db
 
