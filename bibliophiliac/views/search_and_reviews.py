@@ -23,7 +23,7 @@ def fetch_from_api(isbn):
     if not api_key:
         api_key = current_app.config['BOOKS_API_KEY']
     try:
-        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(isbn, api_key))
+        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(isbn, api_key), timeout=30)
         data = res.json()
         book_data = data['items'][0]['volumeInfo']
         if 'imageLinks' in book_data.keys():
@@ -39,7 +39,7 @@ def search_books_results_api(books_results):
         api_data = []
         for result in books_results:
             try:
-                res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(result.isbn, api_key))
+                res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(result.isbn, api_key), timeout=30)
                 data = res.json()
                 books_data = data['items'][0]['volumeInfo']
                 api_data.append({'description': books_data['description'], 'image': books_data['imageLinks']['thumbnail']})
@@ -50,7 +50,7 @@ def search_books_results_api(books_results):
 
 def search_book_info(isbn):    
     try:
-        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(isbn, api_key))
+        res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(isbn, api_key), timeout=30)
         data = res.json()
         book_data = data['items'][0]['volumeInfo']
         google_books_data = {'average_rating': book_data['averageRating'], 'total_reviews':book_data['ratingsCount'],  'description': book_data['description'], 'image': book_data['imageLinks']['thumbnail']}
@@ -62,7 +62,7 @@ def search_books_image(books_results):
     api_data = []
     for result in books_results:
         try:
-            res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(result.isbn, api_key))
+            res = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:{}&maxResults=1&orderBy=newest&key={}".format(result.isbn, api_key), timeout=30)
             data = res.json()
             books_data = data['items'][0]['volumeInfo']
             api_data.append({'image': books_data['imageLinks']['thumbnail']})
