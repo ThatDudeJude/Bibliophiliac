@@ -44,9 +44,7 @@
                                     <a class="secondary-bg py-1" href="{{ url_for('books.fetch_all_reviews') }}">All Reviews</a>
                                 </div>
                             </li>                       
-                            <!-- <li class="py-1">My Reviews</li>
-                            <li class="py-1">All Reviews</li> -->
-                            
+                                                        
                             <li class='py-1'><a class="secondary-bg  py-1" href="{{ url_for('profile.show_user_profile', name=g.username) }}">My Profile</a></li>                                               
                             <li class="py-1"><a class="secondary-bg py-1" href="{{ url_for('authenticate.logout_user') }}">Sign Out</a></li>
                         </ul>
@@ -92,10 +90,14 @@
                 <div>            
                     <nav>
                         <ul>
-                            <li>Book Search</li>
-                            <li>My Profile</li>
-                            <li>My Reviews</li>
-                            <li>Sign Out</li>                    
+                            {% if g.id %}                
+                            <li>  <a href="{{ url_for('books.search_for_book') }}">Book Search</a></li>                            
+                            <li><a href="{{ url_for('books.fetch_user_reviews', id=g.id) }}">My Reviews</a></li>
+                            <li><a href="{{ url_for('authenticate.logout_user') }}">Sign Out</a></li>                    
+                            {% else %}
+                            <li><a href="{{ url_for('authenticate.login_user') }}">Log In</a></li>
+                            <li><a href="{{ url_for('authenticate.register_user') }}">Register</a></li>
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>

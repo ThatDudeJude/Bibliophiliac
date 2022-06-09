@@ -251,6 +251,10 @@ li {
     margin-top: 20px;
 }
 
+.site-footer a, .site-footer:hover, .site-footer:active {
+    color: #fff;
+}
+
 @media(max-height: 600px) {
     .site-footer {
         flex-shrink: 0;
