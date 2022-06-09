@@ -110,7 +110,8 @@ def find_review(isbn):
     print("book reviews", type(book_reviews))
     modified_book_reviews = []
     for review in book_reviews:
-        review_column = dict(review.items())
+        print("Name", review['name'])
+        review_column = dict(review)
         print("z", review_column)    
         file = find_profile_image(review.name)
         avatar, extension = os.path.splitext(file)
