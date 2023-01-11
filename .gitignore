@@ -4,3 +4,6 @@
 /instance/**
 venv
 /tests/**
+/node_modules
+.env
+/bibliophiliac.egg-info

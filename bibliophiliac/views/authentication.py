@@ -46,8 +46,8 @@ def register_user():
                 error = "Username already taken."
             
         flash(error)
-
-    return render_template('log_auth/register.html')
+    else:
+        return render_template('log_auth/register.html')
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login_user():

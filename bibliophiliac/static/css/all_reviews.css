@@ -1,235 +1,238 @@
 /* heading */
 
-.review-header  {
-    background-color: #19021a;
-    padding: 20px 0;
-    text-align: center;
-    width: 80%;
-    margin: 30px auto;
-    line-height: 1em;
+.review-header {
+  background-color: #19021a;
+  padding: 20px 0;
+  text-align: center;
+  width: 80%;
+  margin: 30px auto;
+  line-height: 1em;
 }
-
-
 
 /* Results */
 
 .results-grid {
-    display: grid;
-    grid-template-columns: 100%;                
-    justify-content: center;        
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: center;
 }
 
-.results-grid >* {
-    justify-self: center;
+.results-grid > * {
+  justify-self: center;
 }
 
 .results-grid p.results-info {
-    text-align: center;
+  text-align: center;
 }
+
+/* Total books reviewed */
 
 .reviewed-books-stats {
-    background-color: #2e0230;                        
-    width: 80%;
-    margin: 0 auto;                        
+  background-color: #2e0230;
+  width: 80%;
+  margin: 0 auto;
 }
 
-.reviewed-books-stats table {                    
-    justify-self: center;
-    background-color: #c51162;                        
-    padding: 20px;      
-    text-align: center;
-    margin: 0 auto;
-    max-width: max-content;
-    min-width: 150px;
+.reviewed-books-stats table {
+  justify-self: center;
+  background-color: #c51162;
+  padding: 20px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: max-content;
+  min-width: 150px;
 }
 
-
-/* table.stats tbody { */
-    /* background-color: #c21471; */
-/* } */
-
-.reviewed-books-stats table th, .reviewed-books-stats table td  {
-    text-align: left;
-    vertical-align: top;
+.reviewed-books-stats table th,
+.reviewed-books-stats table td {
+  text-align: left;
+  vertical-align: top;
 }
 
 .reviewed-books-stats table th {
-    min-width: 129px;
-    max-width: 200px;
+  min-width: 129px;
+  max-width: 200px;
 }
 
 .reviewed-books-stats table tr {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .reviewed-books-stats table tr td:last-child {
-    padding-left: 8px;
-}        
+  padding-left: 8px;
+}
+
+/* Books reviewed stats */
 
 .results {
-    display: grid;
-    width: 95%;
-    height: fit-content;
-    grid-template-columns: 30% 70%;
-    padding: 20px 0px 20px 15px;
-    grid-template-rows: max-content max-content;
-    row-gap: 10px;
-    /* column-gap: 10px; */
-    align-items: center;
-    background-color: #2e0230;
-    color: #fff;            
-}        
+  display: grid;
+  width: 95%;
+  height: fit-content;
+  grid-template-columns: 30% 70%;
+  padding: 20px 0px 20px 15px;
+  grid-template-rows: max-content max-content;
+  row-gap: 10px;
+  align-items: center;
+  background-color: #2e0230;
+  color: #fff;
+}
 
 .img {
-    display: block;
-    grid-column: 1 /span 1;
-    grid-row: 1 / span 1;
-    justify-self: center;
-    padding: 20px 0px 0px 20px;
-    width: 100%;    
+  display: block;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  justify-self: center;
+  padding: 20px 0px 0px 20px;
+  width: 100%;
 }
+
 .info {
-    grid-column: 2 /span 1;
-    grid-row: 1 / span 1;
-    justify-self: center;
-    width: 90%;
-    color: #fff;
-}        
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  justify-self: center;
+  width: 90%;
+  color: #fff;
+}
 
 .info table th {
-    width: 75px;
+  width: 75px;
 }
 
-.info table th, .info table td  {
-    text-align: left;
-    vertical-align: top;            
+.info table th,
+.info table td {
+  text-align: left;
+  vertical-align: top;
 }
 
 .info table tr {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .info table tr td:last-child {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 .review-stats {
-    grid-column: 1 /span 2;
-    grid-row: 2 / span 1;
-    justify-self: center;
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 1;
+  justify-self: center;
 }
 
 .img img {
-    width: 100%;
+  width: 100%;
 }
 
 .review-stats button {
-    width: max-content;
-    margin: 0 auto; 
+  width: max-content;
+  margin: 0 auto;
 }
 .review-stats button.btn-secondary:hover {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 .review-stats .description {
-    display: none;            
+  display: none;
 }
 
-table.stats {                    
-    justify-self: center;
-    background-color: #c51162;                        
-    padding: 20px;      
-    text-align: center;
-    width: 100%;            
-    margin: 10px auto;
+table.stats {
+  justify-self: center;
+  background-color: #c51162;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  margin: 10px auto;
 }
 
-
-/* table.reviews-profile tbody { */
-    /* background-color: #c21471; */
-/* } */
-
-table.stats th, table.stats td  {
-    text-align: left;
-    vertical-align: top;
+table.stats th,
+table.stats td {
+  text-align: left;
+  vertical-align: top;
 }
 
 table.stats th {
-    width: 150px;
+  width: 150px;
 }
 
 table.stats tr {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 table.stats tr td:last-child {
-    padding-left: 8px;
-}        
+  padding-left: 8px;
+}
 
 .stats-btn + .show-stats {
-    display: block;
+  display: block;
+}
+
+.alert-card {
+  max-width: 500px;
+  min-width: 200px;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.alert-card p {
+  line-height: 2.5rem;
 }
 
 @media (max-width: 2000px) {
-    .results {
-        width: 50%;
-    }
+  .results {
+    width: 50%;
+  }
 }
 
 @media (max-width: 900px) {
-    .results {
-        width: 70%;
-    }
+  .results {
+    width: 70%;
+  }
 }
 
 @media (max-width: 600px) {
-    .results {
-        width: 90%;
-    }
+  .results {
+    width: 90%;
+  }
 }
 
-
-
 @media (max-width: 400px) {
-    .results {
-        display: grid;
-        width: 85%;
-        height: fit-content;
-        grid-template-columns: 100%;
-        padding: 20px 10px;
-        grid-template-rows: max-content max-content max-content;
-        row-gap: 20px;                
-        align-items: center;
-        background-color: #2e0230;
-        color: #fff;
-        font-size: 0.9rem;                
-    }        
+  .results {
+    display: grid;
+    width: 85%;
+    height: fit-content;
+    grid-template-columns: 100%;
+    padding: 20px 10px;
+    grid-template-rows: max-content max-content max-content;
+    row-gap: 20px;
+    align-items: center;
+    background-color: #2e0230;
+    color: #fff;
+    font-size: 0.9rem;
+  }
 
-    .img {
-        grid-column: 1 /span 1;
-        grid-row: 1 / span 1;
-        justify-self: center;
-        width: 50%;
-    }
-    .info {
-        grid-column: 1 /span 1;
-        grid-row: 2 / span 1;
-        justify-self: center;
-        padding: 0px 5px;
-        text-align: center;
-    }
-    .review-stats {
-        grid-column: 1 /span 1;
-        grid-row: 3 / span 1;
-        justify-self: center;
-        padding: 0px 10px;
-    }
+  .img {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    justify-self: center;
+    width: 50%;
+  }
+  .info {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    justify-self: center;
+    padding: 0px 5px;
+    text-align: center;
+  }
+  .review-stats {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    justify-self: center;
+    padding: 0px 10px;
+  }
 
-    .info table th {
-       width: 68px;
-    }
-
+  .info table th {
+    width: 68px;
+  }
 }

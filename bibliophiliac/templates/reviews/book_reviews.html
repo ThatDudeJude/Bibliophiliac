@@ -79,7 +79,7 @@
         {% for review in book_reviews %}
             <div class="users-reviews card">
                 <div class="user-avatar">
-                    <img src="{{ url_for('static', filename='imgs/avatars/'+review.name) }}" alt="">
+                    <img src="{{ url_for('static', filename='imgs/avatars/'+review.profile_pic) }}" alt="">
                 </div>
                 <div class="user-name">                    
                     <p><a href="{{ url_for('profile.show_user_profile', name=review.name) }}">{{ review.name }}</a></p>

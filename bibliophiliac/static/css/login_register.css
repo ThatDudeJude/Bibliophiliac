@@ -1,158 +1,166 @@
-@keyframes log-phrase-slide{
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
+/* Animation */
+
+@keyframes log-phrase-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-@keyframes log-form-slide{
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
+@keyframes log-form-slide {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
-
 
 body {
-    background-color: #880E4F;
-    overflow-x:
+  background-color: #880e4f;
+  overflow-x: hidden;
 }
 
-
-.login, .register {    
-    display: grid;
-    grid-template-columns: 40% 60%;                
-    width: 100%;
-    height: 95vh;                        
-    overflow: visible;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #880E4F;
-    text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.2);
+.login,
+.register {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  width: 100%;
+  height: 95vh;
+  overflow: visible;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #880e4f;
+  text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 
-
-section.login div.phrase, section.register div.phrase  {                        
-    grid-column: 1 / span 1;    
-    color:  rgb(226, 220, 220);      
-    font-size: 4.0rem;         
-    line-height: 5rem;                     
-    text-align: center;
-    justify-self: center;
-    animation: log-phrase-slide 1000ms ease-in ;
+section.login div.phrase,
+section.register div.phrase {
+  grid-column: 1 / span 1;
+  color: rgb(226, 220, 220);
+  font-size: 4rem;
+  line-height: 5rem;
+  text-align: center;
+  justify-self: center;
+  animation: log-phrase-slide 1000ms ease-in;
 }
 
-div.login-card, div.register-card {         
-    position: relative;
-    grid-column: 2 / span 1;    
-    justify-self: center;
-    animation: log-form-slide 1000ms ease-in ;
+div.login-card,
+div.register-card {
+  position: relative;
+  grid-column: 2 / span 1;
+  justify-self: center;
+  animation: log-form-slide 1000ms ease-in;
 }
 
-form.card {                        
-    width: fit-content;            
-    color: var(--main-color);
-    height: fit-content;
-    background-color: rgb(226, 220, 220);
-    line-height: 1.5rem;
+form.card {
+  width: fit-content;
+  color: var(--main-color);
+  height: fit-content;
+  background-color: rgb(226, 220, 220);
+  line-height: 1.5rem;
 }
 
-.form-control {                   
-    /* padding: 20px 10px; */
-    width: 100%;
-    font-weight: bold;
-    /* margin: 20px auto; */
+.form-control {
+  /* padding: 20px 10px; */
+  width: 100%;
+  font-weight: bold;
+  /* margin: 20px auto; */
 }
 
 form.card h1 {
-    color: #3c0121;                        
+  color: #3c0121;
 }
 
-
-.form-control input[type=text], .form-control input[type=password] {
-    width: 100%;
-    height: 1.0rem;
-    font-size: 1.0rem;
-    border: none;
-    background-color:  rgb(226, 220, 220);
-    border-bottom: 1px #880E4F solid;
+.form-control input[type='text'],
+.form-control input[type='password'] {
+  width: 100%;
+  height: 1rem;
+  font-size: 1rem;
+  border: none;
+  background-color: rgb(226, 220, 220);
+  border-bottom: 1px #880e4f solid;
 }
 
-.form-control input[type=text]:focus, .form-control input[type=password]:focus {
-    outline: none;
-    background-color: rgba(180, 177, 177, 0.2);
+.form-control input[type='text']:focus,
+.form-control input[type='password']:focus {
+  outline: none;
+  background-color: rgba(180, 177, 177, 0.2);
 }
 
-.login-card form button, .register-card form button {
-    width: max-content;
-    margin: 8% 5%;
-    box-shadow: var(--secondary-box-shadow);
+.login-card form button,
+.register-card form button {
+  width: max-content;
+  margin: 8% 5%;
+  box-shadow: var(--secondary-box-shadow);
 }
-.login-card a, .register-card a {
-    display: inline-block;
-    box-shadow: var(--secondary-box-shadow)
+.login-card a,
+.register-card a {
+  display: inline-block;
+  box-shadow: var(--secondary-box-shadow);
 }
 
 @media (max-width: 768px) {
-    .login, .register {               
-        display: grid;
-        grid-template-columns: 100%;            
-        grid-template-rows: 600px 300px;
-        /* width: 100vw; */
-        height: max-content;                        
-        overflow: visible;                 
-        text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.2);
-    }   
-    
-    div.login div.phrase, div.register div.phrase  {                        
-        grid-column: 1 / span 1;
-        grid-row: 2 / span 1;   
-        justify-self: center;   
-        align-self: flex-end;      
-        color:  rgb(226, 220, 220);      
-        font-size: 4.0rem;                              
-        text-align: center;
-        animation: log-phrase-slide 3000ms ease-in ;
-    }    
-    
-    div.login-card, div.register-card {                 
-        grid-column: 1 / span 1;
-        grid-row: 1 / span 1;            
-        justify-self: center;        
-        margin: 0px;
-        animation: log-form-slide 1500ms ease-in ;
-    }
+  .login,
+  .register {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 600px 300px;
+    /* width: 100vw; */
+    height: max-content;
+    overflow: visible;
+    text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.2);
+  }
 
-    form.card {                        
-        margin: 0px auto;
-        width: 80%;
-        height: min-content;
+  div.login div.phrase,
+  div.register div.phrase {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    justify-self: center;
+    align-self: flex-end;
+    color: rgb(226, 220, 220);
+    font-size: 4rem;
+    text-align: center;
+    animation: log-phrase-slide 3000ms ease-in;
+  }
+
+  div.login-card,
+  div.register-card {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    justify-self: center;
+    margin: 0px;
+    animation: log-form-slide 1500ms ease-in;
+  }
+
+  form.card {
+    margin: 0px auto;
+    width: 80%;
+    height: min-content;
+  }
+  @keyframes log-phrase-slide {
+    0% {
+      transform: translateY(-100vh);
     }
-    @keyframes log-phrase-slide{
-        0% {
-            transform: translateY(-100vh);
-        }
-        100% {
-            transform: translateY(0%);
-        }
+    100% {
+      transform: translateY(0%);
     }
-    
-    @keyframes log-form-slide{
-        0% {
-            transform: translateY(100%);
-        }
-        100% {
-            transform: translateY(0%);
-        }
+  }
+
+  @keyframes log-form-slide {
+    0% {
+      transform: translateY(100%);
     }
+    100% {
+      transform: translateY(0%);
+    }
+  }
 }
 
-@media (max-width: 500px) {    
-    form.card {                        
-        width: 90%;
-    }
+@media (max-width: 500px) {
+  form.card {
+    width: 90%;
+  }
 }

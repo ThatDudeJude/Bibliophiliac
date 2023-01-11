@@ -51,9 +51,6 @@ cancelButton.addEventListener('click', () => {
     cancelButton.classList.toggle('hidden');
 })
 // add image preview 
-
-
-
     
 function previewProfileImage(uploader, currentImage) {
     // ensure file was selected

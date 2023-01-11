@@ -20,10 +20,8 @@ def create_app(testing=False, production=False):
     
     if testing:
         app.config.from_object('config.TestingConfig')
-    elif production:
-        app.config.from_object('config.ProductionConfig')
-    else:
-        app.config.from_object('config.DevelopmentConfig')
+    else: 
+        app.config.from_object('config.DevelopmentConfig')    
 
     try:
         os.makedirs(app.instance_path)

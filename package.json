@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "eslint-config-airbnb": "file:../../../../../../usr/lib/node_modules/eslint-config-airbnb",
+    "eslint-config-node": "file:../../../../../../usr/lib/node_modules/eslint-config-node",
+    "eslint-config-prettier": "file:../../../../../../usr/lib/node_modules/eslint-config-prettier",
+    "eslint-plugin-import": "file:../../../../../../usr/lib/node_modules/eslint-plugin-import",
+    "eslint-plugin-jsx-a11y": "file:../../../../../../usr/lib/node_modules/eslint-plugin-jsx-a11y",
+    "eslint-plugin-node": "file:../../../../../../usr/lib/node_modules/eslint-plugin-node",
+    "eslint-plugin-prettier": "file:../../../../../../usr/lib/node_modules/eslint-plugin-prettier",
+    "eslint-plugin-react": "file:../../../../../../usr/lib/node_modules/eslint-plugin-react",
+    "eslint-plugin-react-hooks": "file:../../../../../../usr/lib/node_modules/eslint-plugin-react-hooks",
+    "prettier": "file:../../../../../../usr/lib/node_modules/prettier"
+  }
+}

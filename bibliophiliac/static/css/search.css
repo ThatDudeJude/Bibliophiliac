@@ -1,8 +1,8 @@
 /* Book search */ 
+
+
 div.search-container {            
     position: relative;
-    /* margin-top: 25vh;            
-    margin-bottom: 10vh; */
 }
 
 div.background {
@@ -17,6 +17,8 @@ div.search {
     margin: 0 auto;
 }
 
+/* Search Form */
+
 div.search form {
     display: grid;
     grid-template-columns: 40vw min-content;
@@ -24,7 +26,6 @@ div.search form {
     width: fit-content;
     margin: 0 auto;
     border-radius: 5px;
-
 }
 
 div.search form input[type='text'] {
@@ -36,9 +37,7 @@ div.search form input[type='text'] {
     border-radius: 5px;
 }
 
-div.search form input[type='text']:focus {
-    /* border: 1px #fff solid; */
-    /* background-color: rgb(214, 209, 210); */
+div.search form input[type='text']:focus {    
     outline: none;
 }
 
@@ -46,6 +45,8 @@ div.search form button {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
 }
+
+/* Search Filter */
 
 div.search form .search-filter {
     grid-column: 1 / span 2;
@@ -65,38 +66,7 @@ div.search-filter label{
     margin: 5px 5px;
 }
 
-
-
-@media (max-width: 768px) {
-    /* div.search form { 
-        grid-template-columns: 60vw min-content;
-        height: max-content;        
-    } */
-    div.search form {        
-        grid-template-columns: 90vw;
-        grid-template-rows: max-content max-content max-content;
-        row-gap: 10px;
-        width: max-content;
-        margin: 0 auto;
-    }
-    
-    div.search form input[type='text'] {
-        grid-column: 1 / span 1;
-        grid-row: 1 / span 1;        
-    }
-    
-        
-    div.search form button {
-        grid-column: 1 / span 1;
-        grid-row: 2 / span 1;
-        justify-self: center;
-    }
-    
-    div.search form .search-filter {
-        grid-column: 1 / span 1;
-        grid-row: 3 / span 1;        
-    }
-}
+/* Search Results */
 
 .results-grid {
     position: relative;
@@ -108,6 +78,8 @@ div.search-filter label{
 .results-grid >* {
     justify-self: center;
 }
+
+/* Search Results Summary */
 
 .results-grid p.results-info {
     text-align: center;
@@ -129,6 +101,7 @@ div.search-filter label{
     max-width: 60%;
 }
 
+/* Search Results Grids */
 
 .results {
     display: grid;
@@ -137,8 +110,7 @@ div.search-filter label{
     grid-template-columns: 30% 70%;
     padding: 20px 0px 20px 15px;
     grid-template-rows: max-content max-content;
-    row-gap: 10px;
-    /* column-gap: 10px; */
+    row-gap: 10px;    
     align-items: center;
     background-color: #2e0230;
     color: #fff;  
@@ -148,6 +120,7 @@ div.search-filter label{
 .results a {
     color: #fff;
 }
+
 
 .img {
     grid-column: 1 /span 1;
@@ -208,6 +181,8 @@ div.search-filter label{
     display: block;
 }
 
+/* Search Results Message Alert */
+
 .alert-card {
     max-width: 500px;
     min-width: 200px;
@@ -238,7 +213,6 @@ div.search-filter label{
 }
 
 
-
 @media (max-width: 400px) {
     .results {
         display: grid;
@@ -267,6 +241,7 @@ div.search-filter label{
         padding: 0px 5px;
         text-align: center;
     }
+
     .description-sect {
         grid-column: 1 /span 1;
         grid-row: 3 / span 1;
@@ -286,5 +261,32 @@ div.search-filter label{
     .info table th {
        width: 68px;
     }
+}
 
+@media (max-width: 768px) {
+    
+    div.search form {        
+        grid-template-columns: 90vw;
+        grid-template-rows: max-content max-content max-content;
+        row-gap: 10px;
+        width: max-content;
+        margin: 0 auto;
+    }
+    
+    div.search form input[type='text'] {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;        
+    }
+    
+        
+    div.search form button {
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+        justify-self: center;
+    }
+    
+    div.search form .search-filter {
+        grid-column: 1 / span 1;
+        grid-row: 3 / span 1;        
+    }
 }
