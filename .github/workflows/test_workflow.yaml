@@ -28,5 +28,6 @@ jobs:
           $INSTALL_REQUIREMENTS
           $FLASK_INITIALIZE_DB
           $FLASK_PYTEST
+          ls -l
         env:
           TEST_DATABASE_URL: postgresql://localUser:localPassword@localhost:5432/test
