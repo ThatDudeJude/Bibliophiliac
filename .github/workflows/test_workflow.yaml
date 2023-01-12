@@ -1,7 +1,7 @@
 name: testing
 on: push
 env:
-  INSTALL_REQUIREMENTS: pip3 install -r ../../requirements.txt
+  INSTALL_REQUIREMENTS: pip3 install -r requirements.txt
   FLASK_PYTEST: pytest tests
 
 jobs:
@@ -24,7 +24,8 @@ jobs:
 
     steps:
       - name: Run pytest to test application
-        run: $INSTALL_REQUIREMENTS
+        run: pwd
+          $INSTALL_REQUIREMENTS
           $FLASK_INITIALIZE_DB
           $FLASK_PYTEST
         env:
