@@ -24,11 +24,10 @@ jobs:
 
     steps:
       - name: Run pytest to test application
+        uses: actions/checkout@v2
         run: |
-          pwd
-          ls -l
+          pwd          
           $INSTALL_REQUIREMENTS
           $FLASK_PYTEST
-          ls -l
         env:
           TEST_DATABASE_URL: postgresql://localUser:localPassword@localhost:5432/test
