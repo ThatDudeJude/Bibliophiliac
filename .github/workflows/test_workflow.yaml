@@ -28,6 +28,7 @@ jobs:
       - name: Run pytest to test application
         run: |
           pwd          
+          ls -a
           $INSTALL_REQUIREMENTS
           $FLASK_PYTEST
         env:
