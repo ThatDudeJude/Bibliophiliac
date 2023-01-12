@@ -1,8 +1,7 @@
 name: testing
 on: push
 env:
-  INSTALL_REQUIREMENTS: pip3 install requirements.txt
-  FLASK_INITIALIZE_DB: flask initialize-database
+  INSTALL_REQUIREMENTS: pip3 install -r requirements.txt
   FLASK_PYTEST: pytest tests
 
 jobs:
