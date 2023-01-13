@@ -103,6 +103,7 @@ def validate_avatar(file_stream):
 
 
 def find_profile_image(filename):
+    print("Profile image", basedir + current_app.config["AVATARS_FOLDER"])
     file = [
         file
         for file in glob.glob(

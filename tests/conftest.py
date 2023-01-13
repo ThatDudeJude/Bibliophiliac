@@ -10,7 +10,7 @@ def app():
     app = create_app(testing=True)
 
     with app.app_context():
-        initialize_database()
+        initialize_database(testing=True)
         db = access_database()
         file = open(app.config["TEST_DB_FILE"])
         test_sql = text(file.read())
@@ -38,13 +38,18 @@ def runner(app):
 
 class MOCKUSER(object):
     """Define a user-client object that logs in and out during tests"""
-
+    
     def __init__(self, client):
         self.mock_test_client = client
 
     def login(self, username="test client", password="1234"):
         return self.mock_test_client.post(
             "/login", data={"username": username, "password": password}
+        )
+
+    def register(self, username, password):
+        return self.mock_test_client.post(
+            "/register", data={"username": username, "password": password}
         )
 
     def logout(self):

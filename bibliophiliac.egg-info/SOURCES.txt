@@ -1722,19 +1722,9 @@ bibliophiliac/static/fonts/Quicksand_Book-webfont.eot
 bibliophiliac/static/fonts/Quicksand_Book-webfont.svg
 bibliophiliac/static/fonts/Quicksand_Book-webfont.ttf
 bibliophiliac/static/fonts/Quicksand_Book-webfont.woff
-bibliophiliac/static/imgs/Background6.png
 bibliophiliac/static/imgs/default_avatar.png
-bibliophiliac/static/imgs/avatars/5
-bibliophiliac/static/imgs/avatars/Avatar2
-bibliophiliac/static/imgs/avatars/FF2022
-bibliophiliac/static/imgs/avatars/MobileJude
-bibliophiliac/static/imgs/avatars/No review
-bibliophiliac/static/imgs/avatars/That Dude Jude
-bibliophiliac/static/imgs/avatars/casual
-bibliophiliac/static/imgs/avatars/casual2020
-bibliophiliac/static/imgs/avatars/casual2021
-bibliophiliac/static/imgs/avatars/casual5050
-bibliophiliac/static/imgs/avatars/gachoki
+bibliophiliac/static/imgs/default_book_image.png
+bibliophiliac/static/imgs/avatars/default_avatar.png
 bibliophiliac/static/imgs/ratings/rating_1.png
 bibliophiliac/static/imgs/ratings/rating_2.png
 bibliophiliac/static/imgs/ratings/rating_3.png
