@@ -103,11 +103,6 @@ def validate_avatar(file_stream):
 
 
 def find_profile_image(filename):
-    print("Profile folder", basedir + current_app.config["AVATARS_FOLDER"])
-    print(
-        "Profile image name",
-        basedir + current_app.config["AVATARS_FOLDER"] + "/" + filename,
-    )
     file = [
         file
         for file in glob.glob(
@@ -151,10 +146,8 @@ def update_profile(id):
                         )
                     )
             elif oldname != g.username:
-                file = find_profile_image(oldname)
-                print(file)
-                avatar, extension = os.path.splitext(file)
-                print("extension", extension)
+                file = find_profile_image(oldname)                
+                avatar, extension = os.path.splitext(file)                
                 os.rename(
                     os.path.join(
                         basedir + current_app.config["AVATARS_FOLDER"],

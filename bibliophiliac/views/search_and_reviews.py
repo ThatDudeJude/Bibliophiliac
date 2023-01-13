@@ -190,19 +190,14 @@ def find_review(isbn):
         {"isbn": isbn},
     ).fetchone()
     sql_reviews_query = "SELECT * FROM reviews JOIN users ON users.id=reviews.name_id WHERE book_isbn=:isbn_result"
-    book_reviews = db.execute(sql_reviews_query, {"isbn_result": isbn}).fetchall()
-    print("book reviews", type(book_reviews))
+    book_reviews = db.execute(sql_reviews_query, {"isbn_result": isbn}).fetchall()    
     modified_book_reviews = []
-    for review in book_reviews:
-        print("Name", review["name"])
-        review_column = dict(review)
-        print("z", review_column)
+    for review in book_reviews:        
+        review_column = dict(review)        
         file = find_profile_image(review.name)
         avatar, extension = os.path.splitext(file)
         review_column["name"] = review.name
-        review_column["profile_pic"] = review.name + extension
-        print("name", review.name + extension, "avatar", avatar)
-        # review.name = user_name + extension
+        review_column["profile_pic"] = review.name + extension                
         modified_book_reviews.append(review_column)
 
     if g.get("id", None):
@@ -213,8 +208,7 @@ def find_review(isbn):
             sql_review_query, {"isbn_result": isbn, "id": g.id}
         ).fetchone()
         login_user_review_exists = True if existing_user_review else False
-    google_books_data = fetch_from_api(isbn)
-    # print(data['items'][0]['volumeInfo']['imageLinks']['thumbnail'])
+    google_books_data = fetch_from_api(isbn)    
     return render_template(
         "reviews/book_reviews.html",
         book_results=book_results,

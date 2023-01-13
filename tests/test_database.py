@@ -1,5 +1,4 @@
 from bibliophiliac.views import database
-import pytest
 
 def test_database_connection(app):
     db = database.access_database()

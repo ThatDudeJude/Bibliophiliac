@@ -17,8 +17,7 @@ def find_profile_image(filename):
         for file in glob.glob(
             os.path.join(basedir + current_app.config["AVATARS_FOLDER"], filename + "*")
         )
-    ][0]
-    print("Avatar File", file)
+    ][0]    
     return file
 
 
