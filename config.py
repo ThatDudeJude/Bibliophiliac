@@ -25,3 +25,6 @@ class TestingConfig(Config):
     DATABASE_URL = env.str("TEST_DATABASE_URL")
     TEST_DB_FILE = "./tests/dbase_test.sql"
     BOOKS_CSV = "tests/test_books.csv"
+    AVATARS_FOLDER = "/tests/profile_avatars/avatars"
+    DEFAULT_AVATAR_IMAGE = "/tests/profile_avatars/test_default_avatar.png"
+    DEFAULT_TEST_PROFILE_IMAGE_CHANGE = "/tests/test_image.jpg"

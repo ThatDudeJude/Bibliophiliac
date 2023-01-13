@@ -36,11 +36,20 @@ def runner(app):
     return app.test_cli_runner()
 
 
+@pytest.fixture(scope="function")
+def config(app):
+    "Access app config"
+    return app.config
+
+
 class MOCKUSER(object):
     """Define a user-client object that logs in and out during tests"""
-    
+
     def __init__(self, client):
         self.mock_test_client = client
+        self.mock_test_client.post(
+            "/register", data={"username": "test two", "password": "1234"}
+        )
 
     def login(self, username="test client", password="1234"):
         return self.mock_test_client.post(

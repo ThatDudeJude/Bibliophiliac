@@ -52,6 +52,7 @@ def initialize_database(testing=False):
         engine.execute(sql_query, (isbn, title, author, year))
 
     # Delete existing avatar profiles
+
     avatar_images = glob.glob(
         os.path.join(basedir + current_app.config["AVATARS_FOLDER"], "*")
     )
@@ -60,6 +61,13 @@ def initialize_database(testing=False):
     original = basedir + current_app.config["DEFAULT_AVATAR_IMAGE"]
     destination = basedir + current_app.config["AVATARS_FOLDER"] + "/default_avatar.png"
     shutil.copyfile(original, destination)
+
+    if testing:
+        original = basedir + current_app.config["DEFAULT_AVATAR_IMAGE"]
+        destination = (
+            basedir + current_app.config["AVATARS_FOLDER"] + "/test client.png"
+        )
+        shutil.copyfile(original, destination)
 
 
 def close_db(e=None):
