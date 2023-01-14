@@ -34,4 +34,4 @@ jobs:
           TEST_DATABASE_URL: postgresql://localUser:localPassword@localhost:5432/test
           SECRET_KEY: ${{secrets.SECRET_KEY}}
           DATABASE_URL: postgresql://localUser:localPassword@localhost:5432/test
-          BOOKS_API_KEY: ${{sectrets.BOOKS_API_KEY}}
+          BOOKS_API_KEY: ${{secrets.BOOKS_API_KEY}}
