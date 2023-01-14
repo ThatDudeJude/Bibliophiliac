@@ -12,18 +12,16 @@ env.read_env()
 def create_app(testing=False, production=False):
     """ "The application factory"""
 
-    app = Flask(__name__)
-    app.config["SECRET_KEY"] = env.str("SECRET_KEY")
-    app.config["DATABASE_URL"] = env.str("DATABASE_URL")
-    app.config["SESSION_PERMANENT"] = env.bool("SESSION_PERMANENT", default=False)
-    app.config["BOOKS_API_KEY"] = env.str("BOOKS_API_KEY")
+    app = Flask(__name__, instance_relative_config=True)
+
+    app.config.from_pyfile("config.py")
 
     if testing:
-        app.config.from_object("config.TestingConfig")
+        app.config.from_object("bibliophiliac.config.TestingConfig")
     elif production:
-        app.config.from_object("config.ProductionConfig")
+        app.config.from_object("bibliophiliac.config.ProductionConfig")
     else:
-        app.config.from_object("config.DevelopmentConfig")
+        app.config.from_object("bibliophiliac.config.DevelopmentConfig")
 
     try:
         os.makedirs(app.instance_path)

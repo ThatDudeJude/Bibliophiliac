@@ -1,6 +1,7 @@
 MANIFEST.in
 setup.py
 bibliophiliac/__init__.py
+bibliophiliac/config.py
 bibliophiliac/schema.sql
 bibliophiliac.egg-info/PKG-INFO
 bibliophiliac.egg-info/SOURCES.txt

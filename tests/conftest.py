@@ -8,6 +8,7 @@ import pytest
 def app():
     """Create a test app instance and context"""
     app = create_app(testing=True)
+    print(app.config)
 
     with app.app_context():
         initialize_database(testing=True)

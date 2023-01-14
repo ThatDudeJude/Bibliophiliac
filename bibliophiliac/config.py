@@ -1,9 +1,9 @@
 from environs import Env
 
-from instance.config import DEBUG
-
 env = Env()
 env.read_env()
+
+print("COnfig FILE")
 
 
 class Config(object):
