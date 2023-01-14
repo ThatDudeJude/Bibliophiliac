@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run pytest to test application
         run: |
-          pwd                    
+          pip install -e .
           $INSTALL_REQUIREMENTS
           $FLASK_PYTEST
         env:
