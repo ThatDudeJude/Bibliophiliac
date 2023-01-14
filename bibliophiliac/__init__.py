@@ -13,10 +13,10 @@ def create_app(testing=False, production=False):
     """ "The application factory"""
 
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = env.str("SECRET_KEY")
-    app.config["DATABASE_URL"] = env.str("DATABASE_URL")
-    app.config["SESSION_PERMANENT"] = env.bool("SESSION_PERMANENT", default=False)
-    app.config["BOOKS_API_KEY"] = env.str("BOOKS_API_KEY")
+    # app.config["SECRET_KEY"] = env.str("SECRET_KEY")
+    # app.config["DATABASE_URL"] = env.str("DATABASE_URL")
+    # app.config["SESSION_PERMANENT"] = env.bool("SESSION_PERMANENT", default=False)
+    # app.config["BOOKS_API_KEY"] = env.str("BOOKS_API_KEY")
 
     if testing:
         app.config.from_object("config.TestingConfig")
