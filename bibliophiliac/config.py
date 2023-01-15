@@ -5,6 +5,11 @@ env.read_env()
 
 
 class Config(object):
+    DEBUG = env.bool("DEBUG", default=False)
+    SECRET_KEY = env.str("SECRET_KEY")
+    BOOKS_API_KEY = env.str("BOOKS_API_KEY")
+    DATABASE_URL = env.str("DATABASE_URL")
+    SESSION_PERMANENT = env.bool("SESSION_PERMANENT", default=False)
     TESTING = False
     DEBUG = False
     INITIALIZE_DB_FILE = "./bibliophiliac/schema.sql"
