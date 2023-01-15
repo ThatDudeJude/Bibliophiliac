@@ -5,4 +5,5 @@ venv
 /node_modules
 .env
 /bibliophiliac.egg-info
-*.json
+/package.json
+/package-lock.json
