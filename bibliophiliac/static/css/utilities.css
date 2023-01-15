@@ -1,0 +1,263 @@
+@font-face {
+    font-family: Quicksand;
+    src: url(../fonts/Quicksand_Book-webfont.svg);
+    src: url(../fonts/Quicksand_Book-webfont.eot);
+    src: url(../fonts/Quicksand_Book-webfont.ttf);
+    src: url(../fonts/Quicksand_Book-webfont.woff);
+}
+
+* {
+    box-sizing: border-box;            
+    font-family: Quicksand;
+    margin: 0;
+    padding: 0;    
+}
+
+body {
+    background-color: #826e75;
+    color: #fff;
+    line-height: 1.1rem;
+    /* overflow-y: scroll; */
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+:root {
+    --link-color: #c51162;
+    --main-color: #880E4F;
+    --text-color: #fff;
+    --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    --secondary-box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
+    --text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+a {
+    text-decoration: none;            
+    color: var(--link-color);            
+    width: max-content;
+}
+
+li {
+    list-style-type: none;            
+}
+
+.alert-card {
+    font-weight: 700;
+    width: 80%;
+    margin: 0px auto;
+    color: var(--main-color);
+    text-shadow: var(--text-shadow);    
+}
+
+
+.block {
+    display: block;
+}
+
+.btn-primary, .btn-secondary {
+    display: block;
+    width: max-content;
+    padding: 8px 10px;            
+    background-color: var(--main-color);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    font-size: 1.1rem;
+    border: 1px var(--main-color) solid;
+}
+
+.btn-primary:hover, .btn-secondary:hover {            
+    transform: scale(0.95);
+    background-color: #3c0121;            
+}
+.btn-secondary {
+    background-color: var(--link-color);
+}
+
+
+.fs-0 {
+    font-size: 1.15rem;
+    letter-spacing: 0.06rem;
+}
+
+.fs-1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+}
+
+.fs-2 {
+    font-size: 1.8rem;
+    letter-spacing: 0.13rem;
+}
+
+.fs-3 {
+    font-size: 2.0rem;
+    letter-spacing: 0.16rem;
+}
+
+.fs-4 {
+    font-size: 2.5rem;
+    letter-spacing: 0.2rem;
+}
+
+
+.m-0 {
+    margin: 0;
+}
+.my-1 {
+    margin: 10px 0;
+}
+.my-2 {
+    margin: 15px 0;
+}
+.my-3 {
+    margin: 20px 0;
+}
+.my-4 {
+    margin: 30px 0;
+}
+.m-0 {
+    margin: 0;
+}
+.mx-1 {
+    margin: 0 10px;
+}
+.mx-2 {
+    margin: 0 15px;
+}
+.mx-3 {
+    margin: 0 20px;
+}
+.mx-4 {
+    margin: 0 30px;
+}
+.py-0 {
+    padding: 0;
+}
+.py-1 {
+    padding: 10px 0;
+}
+.py-2 {
+    padding: 15px 0;
+}
+.py-3 {
+    padding: 20px 0;
+}
+.py-4 {
+    padding: 30px 0;
+}
+.p-1 {
+    padding: 10px;
+}
+.p-2 {
+    padding: 15px;
+}
+.p-3 {
+    padding: 20px;
+}
+.p-4 {
+    padding: 30px;
+}
+.h-1 {
+    width: max-content;
+    margin: 30px auto;
+    color: var(--text-color);
+}
+.h-2 {
+    width: max-content;
+    margin: 20px auto;
+    color: var(--text-color);
+}
+.h-3 {
+    width: max-content;
+    margin: 15px auto;
+    color: var(--text-color);
+}
+.h-4 {
+    width: max-content;
+    margin: 10px auto;
+    color: var(--text-color);
+}
+.primary-bg {
+    background-color: var(--main-color);
+    color: #fff;
+}
+.secondary-bg {
+    background-color: var(--link-color);
+    color: #fff;
+}
+.hide {
+    display: none;
+}      
+
+.container {
+    max-width: 1100px;                   
+    margin: 0px auto;
+}
+.flex {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr 5fr;            
+    width: 100%;            
+}
+
+.card  {            
+    background-color: #fff;            
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+}   
+
+.site-container {        
+    display: grid; 
+    grid-template-columns: 1fr;       
+    grid-template-rows: max-content 1fr;    
+    width: 100vw;
+    height: 100vh;        
+}
+
+/* .site-body {   
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;  
+    max-height: max-content;
+} */
+
+.site-body {    
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    /* position: relative;
+    top: 0px;
+    overflow-y: scroll; */
+}
+
+.site-content {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+.site-footer {
+    flex-shrink: 0;
+    margin-top: 20px;
+}
+
+.site-footer a, .site-footer:hover, .site-footer:active {
+    color: #fff;
+}
+
+@media(max-height: 600px) {
+    .site-footer {
+        flex-shrink: 0;
+        margin-top: 150px;
+    }   
+}

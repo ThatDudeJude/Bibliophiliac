@@ -1,0 +1,225 @@
+/* headers */
+
+.review-header {
+  background-color: #19021a;
+  padding: 20px 0;
+  text-align: center;
+  min-width: fit-content;
+  max-width: max-content;
+  margin: 30px auto;
+  line-height: 1em;
+}
+
+/* Logged In User Reviews */
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: center;
+}
+
+.results-grid > * {
+  justify-self: center;
+}
+
+.results-grid .user-reviews-stats {
+  text-align: center;
+}
+
+.user-reviews-stats {
+  background-color: #2e0230;
+  width: 70%;
+  margin: 0 auto;
+}
+
+table.reviews-profile {
+  justify-self: center;
+  background-color: #c51162;
+  padding: 20px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: max-content;
+  min-width: 200px;
+}
+
+table.reviews-profile th,
+table.reviews-profile td {
+  text-align: left;
+  vertical-align: top;
+}
+
+table.reviews-profile th {
+  min-width: 129px;
+  max-width: 200px;
+}
+
+table.reviews-profile tr {
+  display: block;
+  margin-bottom: 5px;
+}
+
+table.reviews-profile tr td:last-child {
+  padding-left: 8px;
+}
+
+.user-reviewed-books {
+  margin: 20px auto;
+}
+
+.review-stats .review-stats-table * {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.user-reviewed-books {
+  display: grid;
+  width: 95%;
+  height: fit-content;
+  grid-template-columns: 30% 70%;
+  padding: 20px 0px 20px 15px;
+  grid-template-rows: max-content max-content;
+  row-gap: 15px;
+  align-items: center;
+  background-color: #19021a;
+  color: #fff;
+}
+
+.img {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  justify-self: center;
+  width: 100%;
+}
+
+.info {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  justify-self: center;
+  width: 90%;
+}
+
+.info table th {
+  width: 75px;
+}
+
+.info table th,
+.info table td {
+  text-align: left;
+  vertical-align: top;
+}
+
+.info table tr {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.info table tr td:last-child {
+  padding-left: 5px;
+}
+
+.user-review {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-direction: wrap;
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 1;
+  justify-self: center;
+}
+
+.img img {
+  width: 100%;
+}
+
+.user-review p {
+  width: 100%;
+  height: min-content;
+  justify-self: center;
+}
+
+.user-review p * {
+  width: 130px;
+  margin: 0px auto;
+}
+
+.alert-card {
+  max-width: 500px;
+  min-width: 200px;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.alert-card p {
+  line-height: 2.5rem;
+}
+
+.alert-card a {
+  display: inline-block;
+  line-height: 1.5rem;
+}
+
+@media (max-width: 2000px) {
+  .user-reviewed-books {
+    width: 50%;
+  }
+}
+
+@media (max-width: 900px) {
+  .user-reviewed-books {
+    width: 70%;
+  }
+}
+
+@media (max-width: 600px) {
+  .user-reviews-stats {
+    width: 90%;
+  }
+
+  .user-reviewed-books {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .user-reviewed-books {
+    display: grid;
+    width: 95%;
+    height: fit-content;
+    grid-template-columns: 100%;
+    padding: 20px 10px;
+    grid-template-rows: max-content max-content min-content;
+    row-gap: 20px;
+    align-items: center;
+    color: #fff;
+    font-size: 0.9rem;
+  }
+
+  .img {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    justify-self: center;
+    width: 50%;
+  }
+
+  .info {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    justify-self: center;
+    padding: 0px 5px;
+    text-align: center;
+    justify-self: center;
+  }
+
+  .user-review {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    justify-self: center;
+  }
+
+  .user-review p {
+    font-size: 1.1rem;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0;
+  }
+}

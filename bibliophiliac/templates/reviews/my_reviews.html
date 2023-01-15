@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/my_reviews.css') }}">
+{% endblock %}
+
+
+{% block title %} My Reviews List {% endblock %}
+{% block content %} 
+
+<section class='container'>    
+    {% if reviews_list %}
+    
+    <div class="results-grid">
+        <div class="user-reviews-stats card">                        
+            <table class="reviews-profile card">
+                <tbody>
+                    
+                    <tr><th>Number of Reviews</th><td>:</td><td>{{ review_stats.total_reviews }}</td></tr>
+                    <tr><th>Total Ratings Average</th><td>:</td><td>{{ review_stats.average_rating }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        
+            {% for review, images in reviews_list %}                
+            <a href="{{ url_for('books.find_review', isbn=review.isbn) }}" class="user-reviewed-books card">            
+                <div class="img px-1">
+                    <img src="{{ images.image }}" alt="">
+                </div>
+                <div class="info px-1">
+                    <table>
+                        <tr><th>Title</th><td>: </td><td>{{ review.title }}</td></tr>
+                        <tr><th>Author(s)</th><td>: </td><td>{{ review.author }}</td></tr>                                
+                        <tr><th>Year</th><td>: </td><td>{{ review.year }}</td></tr>
+                    </table>                    
+                </div>  
+                <div class="user-review">                    
+                    <p class="fs-1">Your Rating: {{ review.rating }} <img src="{{ url_for('static', filename='imgs/ratings/rating_{}.png'.format(review.rating)) }}" alt=""></p>                            
+                    
+                </div>                      
+            </a>     
+            {% endfor %}                                               
+
+    </div>
+    {% else %} 
+
+    <div class="alert-card card" role="alert">                            
+        <p class="fs-0">No Reviews Available. Search for books to review <a href="{{ url_for('books.search_for_book') }}" class="btn-primary">here</a></p>
+    </div>
+    {% endif %}
+    </section>
+
+    
+
+{% endblock %}
