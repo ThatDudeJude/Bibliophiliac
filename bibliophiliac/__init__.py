@@ -1,6 +1,5 @@
 from flask import Flask
 
-# from flask_session import Session
 import os
 from environs import Env
 from flask import redirect, url_for
