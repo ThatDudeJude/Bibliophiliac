@@ -1,8 +1,0 @@
-Flask
-Flask-Session
-psycopg2
-SQLAlchemy
-pytest
-gunicorn
-requests
-environs==9.3.5

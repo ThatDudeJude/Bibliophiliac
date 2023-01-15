@@ -1,9 +1,0 @@
-*.pyc
-*.pem
-*.db
-venv
-/node_modules
-.env
-/bibliophiliac.egg-info
-package.json
-package-lock.json
