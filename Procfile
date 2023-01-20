@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app
+web: flask initialize-database && gunicorn wsgi:app
