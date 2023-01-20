@@ -1,11 +1,11 @@
 from flask import Blueprint, redirect, url_for
-from flask.globals import request, g, session, current_app
+from flask.globals import request, g, current_app
 from flask.helpers import flash
 from flask.templating import render_template
 from bibliophiliac.views.database import access_database
 from bibliophiliac.views.authentication import check_user_permission
 import requests
-import os, shutil, glob
+import os, glob
 
 basedir = os.path.abspath(os.path.dirname(__name__))
 
@@ -190,14 +190,14 @@ def find_review(isbn):
         {"isbn": isbn},
     ).fetchone()
     sql_reviews_query = "SELECT * FROM reviews JOIN users ON users.id=reviews.name_id WHERE book_isbn=:isbn_result"
-    book_reviews = db.execute(sql_reviews_query, {"isbn_result": isbn}).fetchall()    
+    book_reviews = db.execute(sql_reviews_query, {"isbn_result": isbn}).fetchall()
     modified_book_reviews = []
-    for review in book_reviews:        
-        review_column = dict(review)        
+    for review in book_reviews:
+        review_column = dict(review)
         file = find_profile_image(review.name)
         avatar, extension = os.path.splitext(file)
         review_column["name"] = review.name
-        review_column["profile_pic"] = review.name + extension                
+        review_column["profile_pic"] = review.name + extension
         modified_book_reviews.append(review_column)
 
     if g.get("id", None):
@@ -208,7 +208,7 @@ def find_review(isbn):
             sql_review_query, {"isbn_result": isbn, "id": g.id}
         ).fetchone()
         login_user_review_exists = True if existing_user_review else False
-    google_books_data = fetch_from_api(isbn)    
+    google_books_data = fetch_from_api(isbn)
     return render_template(
         "reviews/book_reviews.html",
         book_results=book_results,
@@ -262,7 +262,6 @@ def fetch_user_reviews(id):
         message = "You have no reviews yet"
         average_rating_score = None
     else:
-        # reviews_list = search_books_image(reviews_list)
         reviews_list = zip(
             reviews_list, [fetch_from_api(book.isbn) for book in reviews_list]
         )
@@ -284,7 +283,6 @@ def fetch_all_reviews():
     if reviews_list == []:
         message = "No reviews added yet!"
     else:
-        # reviews_list = search_books_image(reviews_list)
         reviews_list = zip(
             reviews_list, [fetch_from_api(book.isbn) for book in reviews_list]
         )

@@ -1,9 +1,7 @@
 from flask import Blueprint, render_template, redirect, flash
 from flask.globals import request, g, current_app, session
 from flask.helpers import flash, url_for
-from sqlalchemy.exc import IntegrityError, ArgumentError, UnsupportedCompilationError
-
-# from werkzeug.utils import secure_filename
+from sqlalchemy.exc import IntegrityError, ArgumentError
 from bibliophiliac.views.database import access_database
 from bibliophiliac.views.authentication import check_user_permission
 import os, imghdr, requests, glob
@@ -146,8 +144,8 @@ def update_profile(id):
                         )
                     )
             elif oldname != g.username:
-                file = find_profile_image(oldname)                
-                avatar, extension = os.path.splitext(file)                
+                file = find_profile_image(oldname)
+                avatar, extension = os.path.splitext(file)
                 os.rename(
                     os.path.join(
                         basedir + current_app.config["AVATARS_FOLDER"],

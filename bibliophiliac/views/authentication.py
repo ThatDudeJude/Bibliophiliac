@@ -83,8 +83,7 @@ def login_user():
 
             if user_data and check_password_hash(user_data["password"], password):
                 session["user_id"] = user_data["id"]
-                session["user_name"] = user_data["name"]
-                # return render_template('reviews/search.html')
+                session["user_name"] = user_data["name"]                
                 return redirect(url_for("books.search_for_book"))
             else:
                 error = "Wrong username and/or password."
