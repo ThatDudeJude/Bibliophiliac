@@ -1,0 +1,38 @@
+name: Feature Suggestion
+description: Suggest a feature
+title: '[Feature Suggestion]:'
+labels: ['enhancement']
+assignees:
+  - ThatDudeJude
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to suggest a feature!
+  - type: textarea
+    id: feature-type
+    attributes:
+      label: What feature are you suggesting?
+      placeholder: Your proposed feature.
+    validations:
+      required: true
+  - type: textarea
+    id: feature-benefit
+    attributes:
+      label: What benefit will the feature provide if added?
+      placeholder: Adding the said feature will ....
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+
+  - type: markdown
+    attributes:
+      value: 'Thanks for completing our feature suggestion form!'

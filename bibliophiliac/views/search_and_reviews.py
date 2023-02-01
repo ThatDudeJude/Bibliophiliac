@@ -209,14 +209,18 @@ def find_review(isbn):
         ).fetchone()
         login_user_review_exists = True if existing_user_review else False
     google_books_data = fetch_from_api(isbn)
-    return render_template(
-        "reviews/book_reviews.html",
-        book_results=book_results,
-        book_reviews=modified_book_reviews,
-        user_review_exists=login_user_review_exists,
-        book_stats=book_stats,
-        google_books=google_books_data,
-    )
+    if book_results:
+        return render_template(
+            "reviews/book_reviews.html",
+            book_results=book_results,
+            book_reviews=modified_book_reviews,
+            user_review_exists=login_user_review_exists,
+            book_stats=book_stats,
+            google_books=google_books_data,
+        )
+    else:
+        flash(f"Book with isbn no: {isbn} not found!")
+        return render_template("error.html")
 
 
 @bp.route("/review/<string:isbn>", methods=["GET", "POST"])

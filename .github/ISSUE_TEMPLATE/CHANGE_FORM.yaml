@@ -1,0 +1,53 @@
+name: Change Suggestion
+description: Suggest a change
+title: '[Change Suggestion]: '
+labels: ['enhancement']
+assignees:
+  - ThatDudeJude
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to suggest a change!
+  - type: dropdown
+    id: change-type
+    attributes:
+      label: What type of change are you suggesting?
+      multiple: true
+      options:
+        - Improve documentation
+        - Enhance perfomance
+        - Removing duplicates
+        - Extra attention (security, vulnerabilities, etc.)
+    validations:
+      required: true
+  - type: textarea
+    id: change-details
+    attributes:
+      label: What specific change you are suggesting?
+      description: Give a description of your proposed change.
+      placeholder: Your proposed change.
+      value: 'I want to change...'
+    validations:
+      required: true
+  - type: textarea
+    id: change-validation
+    attributes:
+      label: What will the change improve if implemented?
+      description: Specify what the change will improve.
+      placeholder: Implementing the said changes will ....
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+
+  - type: markdown
+    attributes:
+      value: 'Thanks for completing our changes form!'

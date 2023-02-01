@@ -27,7 +27,7 @@
             </div>
             {% endif %}            
             {% endfor %}
-            <form action="{{ url_for('profile.update_profile', id=g.id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ url_for('profile.update_profile', id=g.id) }}" method="post" enctype="multipart/form-data" id="profile-form">
                             
             <div id="avatar">                
                 <img src="{{ url_for('static', filename=g.profile_url) }}" id="avatar-img">                

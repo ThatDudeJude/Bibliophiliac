@@ -94,6 +94,12 @@ To uninstall bibliophiliac after the test, run
 * Update Profile
 ![Updating Profile](/bibliophiliac/static/imgs/Change_Profile_Name.gif)
 
+## Contributing
+Want to contribute? See contributing guidelines [here](/CONTRIBUTING.md).
+
 ## Codebeat
 
 [![codebeat badge](https://codebeat.co/badges/f49762c5-7506-446a-b738-fe7f9fb8bc28)](https://codebeat.co/a/thatdudejude/projects/github-com-thatdudejude-bibliophiliac-profile_branch_final)
+
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)

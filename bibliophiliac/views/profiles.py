@@ -39,9 +39,13 @@ def show_user_profile(name):
     if request.method == "GET":
         can_edit = False
         user_name = name
-        file = find_profile_image(user_name)
-        _, extension = os.path.splitext(file)
-        profile_image = user_name + extension
+        try:
+            file = find_profile_image(user_name)
+            _, extension = os.path.splitext(file)
+            profile_image = user_name + extension
+        except IndexError:
+            flash(f"Username {name} doesn't exist!")
+            return render_template("error.html")
         db = access_database()
         error = None
         if name == g.get("username", None):
