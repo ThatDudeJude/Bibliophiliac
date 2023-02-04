@@ -1,17 +1,19 @@
 # Bibliophiliac
 
-A simple web-based book review app for book lovers that allows users to search for book ratings and reviews and add their own. 
+A simple web-based book review app for book lovers that allows users to search for book information, review data, and add their own reviews. 
 
 ### Development Process
 This project's frontend was built using pure CSS and Javascript (no styling framework) and the backend uses the python-based flask microframework that interacts with a database. The backend logic utilizes sqlachemy's ORM to interact with a postgresql database. For book description data, cover images, and ratings data, the [google books api](https://www.developers.google.com/books/docs/v1/using) repository is utilized in the app.
 
 ### Technology used
-* Flask  v2.0.2 - Web microframework for Python web development
-* SQLAlchemy v1.4.25 - Provides the ORM interface for interacting with databases
-* Postgres v14.0 - SQL based Relational Database Management System (RDMS) for handling app data
-* Psycopg2 v2.9.1 - PostgreSQL database adapter for the Python-based web app
-* Pytest v6.2.5 - Testing library for building and running the unit tests
-* Google books api service ([more info here](https://www.developers.google.com/books/docs/v1/using))
+|Technology   |   Version |   Utility                      |
+|-------------|-----------|--------------------------------|
+|Flask        | v2.0.2    |Web microframework for Python web development
+|SQLAlchemy   |v1.4.25    |Provides the ORM interface for interacting with databases
+|Postgres     |v14.0      | SQL based Relational Database Management System (RDMS) for handling app data
+|Psycopg2     |v2.9.1     | PostgreSQL database adapter for the Python-based web app
+| Pytest       |v6.2.5    | Testing library for building and running the unit tests
+|Google books api service | v1 | Provides access to book data ([more info here](https://www.developers.google.com/books/docs/v1/using))
 
 ## Installation and Setup
 
@@ -42,7 +44,7 @@ For Windows users, run:
     \! hostname
 ```
 
-Now create a role with privileges necessary for running the app
+Now create a role and assign the privileges necessary for running the app's database
 ```    
     CREATE USER bibliophiliac WITH PASSWORD 'bibliophiliac_password';
     CREATE DATABASE bibliophiliac_db;    
@@ -102,4 +104,4 @@ Want to contribute? See contributing guidelines [here](/CONTRIBUTING.md).
 [![codebeat badge](https://codebeat.co/badges/f49762c5-7506-446a-b738-fe7f9fb8bc28)](https://codebeat.co/a/thatdudejude/projects/github-com-thatdudejude-bibliophiliac-profile_branch_final)
 
 ## License
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE.txt)
