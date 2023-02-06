@@ -7,3 +7,4 @@ venv
 /bibliophiliac.egg-info
 package.json
 package-lock.json
+**/fontawesome-free-5.15.4-web/**
