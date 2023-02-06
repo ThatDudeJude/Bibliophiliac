@@ -1,8 +1,8 @@
 name: testing
 on: push
 env:
-  INSTALL_REQUIREMENTS: pip3 install -r requirements.txt
-  FLASK_PYTEST: pytest tests
+  INSTALL_REQUIREMENTS: python3 -m pip install -r requirements.txt
+  FLASK_PYTEST: python3 -m pytest tests -vv
 
 jobs:
   test_project:
@@ -25,9 +25,17 @@ jobs:
     steps:
       - name: checkout out current code using public action
         uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.5'
       - name: Run pytest to test application
         run: |
+<<<<<<< HEAD
           $INSTALL_REQUIREMENTS          
+=======
+          $INSTALL_REQUIREMENTS
+>>>>>>> e1b28edcc618ed77afa587d211cf7d64ee851609
           $FLASK_PYTEST
         env:
           TEST_DATABASE_URL: postgresql://localUser:localPassword@localhost:5432/test
