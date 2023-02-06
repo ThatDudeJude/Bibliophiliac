@@ -2,7 +2,7 @@ name: testing
 on: push
 env:
   INSTALL_REQUIREMENTS: pip3 install -r requirements.txt
-  FLASK_PYTEST: pytest tests
+  FLASK_PYTEST: pytest tests -vv
 
 jobs:
   test_project:
