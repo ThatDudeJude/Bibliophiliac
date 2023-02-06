@@ -28,7 +28,6 @@ jobs:
       - name: Run pytest to test application
         run: |
           $INSTALL_REQUIREMENTS
-          pip install -e .          
           $FLASK_PYTEST
         env:
           TEST_DATABASE_URL: postgresql://localUser:localPassword@localhost:5432/test
