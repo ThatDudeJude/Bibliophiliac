@@ -9,13 +9,16 @@ import click, csv, os, glob, shutil
 
 basedir = os.path.abspath(os.path.dirname(__name__))
 
+def update_URI_scheme(url):
+    return url.replace("postgres://", "postgresql://", 1)
+
 
 def access_database():
     """Access database connection to database in g within scoped request context.
     Otherwise create a connection and store it in g for new requests.
     """
     if "db" not in g:
-        engine = create_engine(current_app.config["DATABASE_URL"])
+        engine = create_engine(update_URI_scheme(current_app.config["DATABASE_URL"]))
         db = scoped_session(sessionmaker(bind=engine))
         g.db = db
 
@@ -27,7 +30,7 @@ def initialize_database(testing=False):
     and import book information to the books table.
     """
 
-    engine = create_engine(current_app.config["DATABASE_URL"])
+    engine = create_engine(update_URI_scheme(current_app.config["DATABASE_URL"]))
     engine.execute(
         "DROP TABLE IF EXISTS reviews; DROP TABLE IF EXISTS books; DROP TABLE IF EXISTS users"
     )
