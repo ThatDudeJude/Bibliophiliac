@@ -11,7 +11,7 @@ class Config(object):
     BOOKS_CSV = "books.csv"
     AVATARS_FOLDER = "/bibliophiliac/static/imgs/avatars"
     DEFAULT_AVATAR_IMAGE = "/bibliophiliac/static/imgs/default_avatar.png"
-
+    LOG_WITH_GUNICORN = False
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -19,6 +19,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
+    LOG_WITH_GUNICORN = True
 
 
 class TestingConfig(Config):
