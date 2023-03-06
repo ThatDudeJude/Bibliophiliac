@@ -64,7 +64,7 @@ Next, set the environment variables using information from hostname, the bibliop
     DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/bibliophiliac_db
     TEST_DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/test_bibliophiliac_db
 ```
-10.  Before running the development server, set the environment variables for SECRET_KEY, BOOKS_API_KEY, and the necessary Flask-related variables. To generate a secret key, type in ``python3 -c "import secrets; print(secrets.hex_token());" `` and use the output as the secret key.
+10.  Before running the development server, set the environment variables for SECRET_KEY, BOOKS_API_KEY, and the necessary Flask-related variables. To generate a secret key, type in ``python3 -c "import secrets; print(secrets.token_urlsafe());" `` and use the output as the secret key.
 ```
     SECRET_KEY=[secret_key]    
     BOOKS_API_KEY=[google_books_api_key]
