@@ -18,7 +18,7 @@ def access_database():
     Otherwise create a connection and store it in g for new requests.
     """
     if "db" not in g:
-        engine = create_engine(update_URI_scheme(current_app.config["DATABASE_URL"]), pool_pre_ping=True, pool_recycle=600)
+        engine = create_engine(update_URI_scheme(current_app.config["DATABASE_URL"]), pool_pre_ping=True, pool_recycle=200)
         db = scoped_session(sessionmaker(bind=engine))
         g.db = db
 
